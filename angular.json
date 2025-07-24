@@ -24,7 +24,8 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/app/data"
             ],
             "styles": [
               "src/styles.scss"
