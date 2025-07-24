@@ -7,7 +7,7 @@ import { Data } from '../data/types';
   providedIn: 'root',
 })
 export class DataService {
-  private jsonUrl = 'app/data/mock-data.json';
+  private jsonUrl = './app/data/mock-data.json';
 
   constructor(private http: HttpClient) {}
 
