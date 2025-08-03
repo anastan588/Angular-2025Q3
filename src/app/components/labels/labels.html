@@ -1,5 +1,7 @@
 <mat-tab-group>
-  <mat-tab *ngFor="let tab of items.tabs" label="{{tab.title}}">
-    <app-card-item *ngFor="let card of tab.cards" [card]="card"/>
+  <mat-tab *ngFor="let tab of items.tabs" label="{{ tab.title }}">
+    <div class="tab-content">
+      <app-card-item *ngFor="let card of tab.cards" [card]="card" />
+    </div>
   </mat-tab>
 </mat-tab-group>

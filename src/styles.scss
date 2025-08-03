@@ -54,7 +54,7 @@ a:active {
 }
 
 button {
-  cursor: pointer;;
+  cursor: pointer;
 }
 
 ul li {
@@ -62,3 +62,36 @@ ul li {
 }
 
 /*Normalize*/
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+:root {
+  @include mat.slide-toggle-overrides(
+    (
+      track-height: 15px,
+      handle-height: 16px,
+      unselected-icon-size: 0px,
+      selected-icon-size: 0px,
+      selected-handle-size: 16px,
+      unselected-handle-size: 16px,
+    )
+  );
+  @include mat.tabs-overrides(
+    (
+      active-label-text-color: white,
+      inactive-label-text-color: gray,
+      divider-color: white,
+      active-indicator-color: white,
+      active-hover-label-text-color: white,
+      active-hover-indicator-color: white,
+      active-focus-label-text-color: white,
+      inactive-hover-label-text-color: white,
+    )
+  );
+
+  @include mat.card-overrides(
+    (
+      filled-container-color: oklch(51.1% 0.096 186.391),
+      elevated-container-color: oklch(51.1% 0.096 186.391),
+    )
+  );
+}

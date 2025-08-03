@@ -1,5 +1,16 @@
 <div class="flex gap-4">
+  <mat-icon
+    aria-hidden="false"
+    [attr.aria-label]="'Icon for ' + item.label"
+    [fontIcon]="getIcon(item.label)"
+  ></mat-icon>
   <p>{{ item.label }}</p>
-  <p>{{ item.value?.amount }}</p>
-  <p>{{ item.value?.unit }}</p>
+  <ng-container *ngIf="item.value; else noValue"
+    ><p>
+      {{ { amount: item.value.amount, unit: item.value.unit } | formatvalues }}
+    </p></ng-container
+  >
+  <ng-template #noValue>
+    <p>N/A</p>
+  </ng-template>
 </div>

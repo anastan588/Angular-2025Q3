@@ -1,6 +1,14 @@
 <div class="flex gap-4">
+  <mat-icon
+    aria-hidden="false"
+    [attr.aria-label]="'Icon for ' + item.label"
+    [fontIcon]="getIcon(item.label)"
+    [ngClass]="isChecked ? 'icon-checked' : 'icon-unchecked'"
+  ></mat-icon>
   <p>{{ item.label }}</p>
-  <mat-slide-toggle [(ngModel)]="isChecked"
-    ></mat-slide-toggle
-  >
+  <mat-slide-toggle
+    hideIcon="true"
+    [(ngModel)]="isChecked"
+    (change)="onToggleChange()"
+  ></mat-slide-toggle>
 </div>
