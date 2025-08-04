@@ -1,1 +1,32 @@
-<p>sidebar works!</p>
+<mat-sidenav-container autosize>
+  <mat-sidenav [opened]="true" mode="side">
+    <mat-toolbar color="primary">
+      <button mat-icon-button aria-label="Menu icon">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <h1>Smart Home UI</h1>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+    <mat-nav-list>
+      <a mat-list-item [routerLink]="['']">
+        <span class="entry">
+          <mat-icon>house</mat-icon>
+          <span>Overview</span>
+        </span>
+      </a>
+      <a mat-list-item [routerLink]="['/about']">
+        <span class="entry">
+          <mat-icon>house</mat-icon>
+          <span>About</span>
+        </span>
+      </a>
+    </mat-nav-list>
+    <mat-divider></mat-divider>
+    <div class="logo-block">
+      <img [src]="logoUrl" alt="RS School Logo" class="logo" />
+      <p class="logo-text">RS.School. Angular</p>
+    </div></mat-sidenav
+  ><mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

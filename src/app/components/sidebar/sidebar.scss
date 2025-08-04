@@ -1,0 +1,38 @@
+mat-toolbar {
+  display: flex;
+  gap: 20px;
+}
+mat-icon {
+  color: white;
+}
+
+mat-sidenav {
+  background-color: oklch(27.7% 0.046 192.524);
+  color: white;
+  display: flex;
+}
+
+mat-toolbar {
+  background-color: oklch(27.7% 0.046 192.524);
+  color: white;
+}
+mat-nav-list {
+  flex: 1 0 auto;
+}
+span {
+  color: white;
+}
+.entry {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.logo-block {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+}
+.logo {
+  height: 20px;
+}

@@ -8,7 +8,7 @@ import { Dashboard } from '../../components/dashboard/dashboard';
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [Sidebar, Dashboard],
+  imports: [Dashboard],
   templateUrl: './home-page.html',
   styleUrl: './home-page.scss',
 })

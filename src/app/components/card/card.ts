@@ -30,9 +30,8 @@ export class CardItem {
 
   onCheckedChange(value: boolean) {
     if (value) {
-      this.isChecked = value; // Set to true if any device is checked
+      this.isChecked = value;
     } else {
-      // Check if any device is checked to update isChecked
       this.isChecked = this.card.items.some(
         (item) => item.type === 'device' && item.state,
       );
