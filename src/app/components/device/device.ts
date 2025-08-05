@@ -8,12 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-device',
   standalone: true,
-  imports: [
-    MatSlideToggleModule,
-    CommonModule,
-    FormsModule,
-    MatIconModule,
-  ],
+  imports: [MatSlideToggleModule, CommonModule, FormsModule, MatIconModule],
   templateUrl: './device.html',
   styleUrls: ['./device.scss'],
 })
@@ -32,6 +27,12 @@ export class Device implements OnInit {
 
   ngOnInit() {
     this.isChecked = this.item?.state ?? false;
+    this.checkedChange.emit(this.isChecked);
+  }
+
+  onToggleClick() {
+    this.isChecked = !this.isChecked;
+    this.item.state = this.isChecked;
     this.checkedChange.emit(this.isChecked);
   }
 

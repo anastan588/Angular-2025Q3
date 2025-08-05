@@ -73,6 +73,11 @@ ul li {
       selected-icon-size: 0px,
       selected-handle-size: 16px,
       unselected-handle-size: 16px,
+      disabled-selected-track-color: oklch(85.2% 0.199 91.936),
+      selected-track-color: oklch(45.5% 0.188 13.697),
+      selected-hover-track-color: oklch(45.5% 0.188 13.697),
+      selected-pressed-track-color: oklch(45.5% 0.188 13.697),
+      selected-focus-track-color: oklch(45.5% 0.188 13.697),
     )
   );
   @include mat.tabs-overrides(

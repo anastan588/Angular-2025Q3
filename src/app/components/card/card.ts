@@ -6,6 +6,7 @@ import { Device } from '../device/device';
 import { Sensor } from '../sensor/sensor';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
+import { CardHilight } from 'src/app/directives/card-hilight';
 
 @Component({
   selector: 'app-card-item',
@@ -16,6 +17,7 @@ import { FormsModule } from '@angular/forms';
     Sensor,
     MatSlideToggleModule,
     FormsModule,
+    CardHilight
   ],
   templateUrl: './card.html',
   styleUrl: './card.scss',
