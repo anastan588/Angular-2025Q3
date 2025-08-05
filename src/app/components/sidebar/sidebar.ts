@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterModule, RouterOutlet } from '@angular/router';
@@ -25,4 +25,28 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 })
 export class Sidebar {
   logoUrl: string = './rs_school.svg';
+  isDesktop: boolean = window.innerWidth > 768;
+  sidenavOpened: boolean = false;
+
+  @HostListener('window:resize', ['$event'])
+  ngOnInit(event: Event) {
+    this.isDesktop = window.innerWidth > 768;
+    if (this.isDesktop) {
+      this.sidenavOpened = true;
+    } else {
+      this.sidenavOpened = false;
+    }
+  }
+  onResize(event: Event) {
+    this.isDesktop = window.innerWidth > 768;
+    if (this.isDesktop) {
+      this.sidenavOpened = true;
+    } else {
+      this.sidenavOpened = false;
+    }
+  }
+
+  toggleSidenav() {
+    this.sidenavOpened = !this.sidenavOpened;
+  }
 }

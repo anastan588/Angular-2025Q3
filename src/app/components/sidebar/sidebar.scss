@@ -16,9 +16,27 @@ mat-toolbar {
   background-color: oklch(27.7% 0.046 192.524);
   color: white;
 }
-mat-nav-list {
-  flex: 1 0 auto;
+.menu-close {
+  padding: 8px;
 }
+.list_links {
+  flex: 1 1 auto;
+}
+
+.mat-side-menu {
+  border-radius: 0px;
+}
+
+.sidenav {
+  width: 250px;
+}
+
+.side-menu {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
 span {
   color: white;
 }
@@ -36,3 +54,4 @@ span {
 .logo {
   height: 20px;
 }
+

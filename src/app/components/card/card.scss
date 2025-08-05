@@ -1,6 +1,9 @@
 mat-card {
   background-color: oklch(51.1% 0.096 186.391);
   width: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 mat-card-content {
   display: flex;

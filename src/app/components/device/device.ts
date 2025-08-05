@@ -36,13 +36,11 @@ export class Device implements OnInit {
   }
 
   onToggleChange() {
-    console.log('change', this.isChecked);
     this.item.state = this.isChecked;
     this.checkedChange.emit(this.isChecked);
   }
   getIcon(label: string): string {
     if (label.includes('Lamp')) {
-      console.log(label);
       return this.iconMap['Lamp'];
     }
     if (label.includes('Light')) {

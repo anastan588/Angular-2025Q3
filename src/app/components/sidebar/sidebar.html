@@ -1,32 +1,47 @@
 <mat-sidenav-container autosize>
-  <mat-sidenav [opened]="true" mode="side">
-    <mat-toolbar color="primary">
-      <button mat-icon-button aria-label="Menu icon">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <h1>Smart Home UI</h1>
-    </mat-toolbar>
-    <mat-divider></mat-divider>
-    <mat-nav-list>
-      <a mat-list-item [routerLink]="['']">
-        <span class="entry">
-          <mat-icon>house</mat-icon>
-          <span>Overview</span>
-        </span>
-      </a>
-      <a mat-list-item [routerLink]="['/about']">
-        <span class="entry">
-          <mat-icon>house</mat-icon>
-          <span>About</span>
-        </span>
-      </a>
-    </mat-nav-list>
-    <mat-divider></mat-divider>
-    <div class="logo-block">
-      <img [src]="logoUrl" alt="RS School Logo" class="logo" />
-      <p class="logo-text">RS.School. Angular</p>
-    </div></mat-sidenav
-  ><mat-sidenav-content>
+  <mat-sidenav
+    class="mat-side-menu"
+    [opened]="sidenavOpened"
+    fixedInViewport="true"
+    mode="side"
+  >
+    <div class="side-menu" [class.sidenav]="sidenavOpened">
+      <div></div>
+      <mat-toolbar color="primary" class="menu-close">
+        <button
+          class="menu-button"
+          mat-icon-button
+          aria-label="Menu icon"
+          (click)="toggleSidenav()"
+        >
+          <mat-icon>{{ sidenavOpened ? "close" : "menu" }}</mat-icon>
+        </button>
+        <h1 *ngIf="sidenavOpened">Smart Home UI</h1>
+      </mat-toolbar>
+      <div class="list_links">
+        <mat-nav-list>
+          <mat-divider></mat-divider>
+          <a mat-list-item [routerLink]="['']">
+            <span class="entry">
+              <mat-icon>apps</mat-icon>
+              <span *ngIf="sidenavOpened">Overview</span>
+            </span>
+          </a>
+          <a mat-list-item [routerLink]="['/about']">
+            <span class="entry">
+              <mat-icon>help</mat-icon>
+              <span *ngIf="sidenavOpened">About</span>
+            </span>
+          </a>
+        </mat-nav-list>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="logo-block">
+        <img [src]="logoUrl" alt="RS School Logo" class="logo" />
+        <p class="logo-text" *ngIf="sidenavOpened">RS.School. Angular</p>
+      </div>
+    </div> </mat-sidenav
+  ><mat-sidenav-content [style.margin-left.px]="!sidenavOpened ? 74 : 250">
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

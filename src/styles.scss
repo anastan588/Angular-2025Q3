@@ -95,3 +95,12 @@ ul li {
     )
   );
 }
+
+mat-sidenav[style] {
+  visibility: visible !important;
+}
+
+.mat-drawer {
+  transform: none !important;
+  width: inherit !important;
+}
