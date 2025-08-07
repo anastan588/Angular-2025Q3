@@ -1,1 +1,8 @@
-<main class="main"><app-sidebar class="sidebar"></app-sidebar></main>
+<main class="main">
+  <ng-container *ngIf="isAuthenticated(); else routerOutlet">
+    <app-sidebar class="sidebar"></app-sidebar>
+  </ng-container>
+  <ng-template #routerOutlet>
+    <router-outlet></router-outlet>
+  </ng-template>
+</main>
