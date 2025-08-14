@@ -1,1 +1,33 @@
-<p>login-page works!</p>
+<div class="login-page">
+  <form [formGroup]="loginForm" class="login-form">
+    <p class="form-title">Welcome home!</p>
+    <mat-form-field>
+      <mat-label>User name</mat-label>
+      <input
+        matInput
+        #input
+        placeholder="Ex. Nougat"
+        (input)="onInput($event)"
+        formControlName="userName"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Enter your password</mat-label>
+      <input
+        matInput
+        [type]="hide() ? 'password' : 'text'"
+        formControlName="passWord"
+      />
+      <button
+        matIconButton
+        matSuffix
+        (click)="clickEvent($event)"
+        [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide()"
+      >
+        <mat-icon>{{ hide() ? "visibility_off" : "visibility" }}</mat-icon>
+      </button>
+    </mat-form-field>
+    <button matButton="elevated">Log in</button>
+  </form>
+</div>
