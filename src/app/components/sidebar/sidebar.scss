@@ -55,3 +55,13 @@ span {
   height: 20px;
 }
 
+.logout-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+}

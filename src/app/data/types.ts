@@ -27,3 +27,17 @@ interface Tab {
 export interface Data {
   tabs: Tab[];
 }
+
+export interface AuthResponse {
+  token: string;
+}
+
+export interface User {
+  fullName: string;
+  initials: string;
+}
+
+export interface ProfileResponse {
+  fullName: string;
+  initials: string;
+}

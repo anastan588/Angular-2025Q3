@@ -36,6 +36,13 @@
         </mat-nav-list>
       </div>
       <mat-divider></mat-divider>
+      <div class="logout-menu">
+        <p class="user-info">{{ userFullName }}</p>
+        <button class="logout-button">
+          <mat-icon (click)="logout()">logout</mat-icon>
+        </button>
+      </div>
+      <mat-divider></mat-divider>
       <div class="logo-block">
         <img [src]="logoUrl" alt="RS School Logo" class="logo" />
         <p class="logo-text" *ngIf="sidenavOpened">RS.School. Angular</p>
