@@ -46,7 +46,7 @@ export class AuthService {
       catchError((error: HttpErrorResponse) => {
         console.error('Authorization failed', error);
         this.authenticated = false;
-        if (error.status) {
+        if (error.status === 401) {
           this.router.navigate(['/login']);
         }
         return throwError(() => error);
