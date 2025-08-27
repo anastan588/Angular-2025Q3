@@ -1,8 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Sidebar } from '../../components/sidebar/sidebar';
-import { Labels } from '../../components/labels/labels';
-import { Data } from '../../data/types';
-import { DataService } from '../../services/data';
+import { Component } from '@angular/core';
 import { Dashboard } from '../../components/dashboard/dashboard';
 
 @Component({

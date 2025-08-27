@@ -21,18 +21,15 @@
       <div class="list_links">
         <mat-nav-list>
           <mat-divider></mat-divider>
-          <a mat-list-item [routerLink]="['']">
-            <span class="entry">
-              <mat-icon>apps</mat-icon>
-              <span *ngIf="sidenavOpened">Overview</span>
-            </span>
-          </a>
-          <a mat-list-item [routerLink]="['/about']">
-            <span class="entry">
-              <mat-icon>help</mat-icon>
-              <span *ngIf="sidenavOpened">About</span>
-            </span>
-          </a>
+          @for (dashboard of dashboards; track dashboard.id) {
+            <a mat-list-item [routerLink]="[dashboard.title, dashboard.id]"
+              >
+              <span class="entry">
+                <mat-icon>{{ dashboard.icon }}</mat-icon>
+                <span *ngIf="sidenavOpened">{{ dashboard.title }}</span>
+              </span>
+            </a>
+          }
         </mat-nav-list>
       </div>
       <mat-divider></mat-divider>

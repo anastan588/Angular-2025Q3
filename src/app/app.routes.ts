@@ -4,6 +4,8 @@ import { AboutPage } from './pages/about-page/about-page';
 import { LoginPage } from './pages/login-page/login-page';
 import { AuthGuard } from './guard/auth-guard';
 import { NotfoundPage } from './pages/notfound-page/notfound-page';
+import { Dashboard } from './components/dashboard/dashboard';
+import { Label } from './components/label/label';
 
 export const routes: Routes = [
   {
@@ -19,6 +21,16 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginPage,
+  },
+  {
+    path: ':dashboard/:dashboardId',
+    component: Dashboard,
+    children: [
+      {
+        path: ':tabId',
+        component: Label
+      },
+    ],
   },
   { path: '**', component: NotfoundPage },
 ];

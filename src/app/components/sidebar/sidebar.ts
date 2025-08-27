@@ -8,7 +8,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthService } from 'src/app/services/auth';
 import { TokenService } from 'src/app/services/token-service';
-import { User } from 'src/app/data/types';
+import { DashBoardItem, User } from 'src/app/data/types';
+import { DataService } from 'src/app/services/data';
 
 @Component({
   selector: 'app-sidebar',
@@ -31,20 +32,28 @@ export class Sidebar implements OnInit {
   sidenavOpened: boolean = this.isDesktop;
   token!: string;
   user!: User;
+  dashboards!: DashBoardItem[];
 
   constructor(
     private authService: AuthService,
     private tokenService: TokenService,
-  ) {}
+    private dataService: DataService,
+  ) {
+    this.dataService.dashboardsLoaded$.subscribe((dashBoardloaded) => {
+      this.dashboards = dashBoardloaded;
+    });
+  }
 
   ngOnInit() {
     this.token = this.tokenService.getToken() || '';
-    console.log('token', this.token);
+
     if (this.token) {
+      console.log('token', this.token);
       this.authService.profile().subscribe({
         next: (response) => {
           console.log('User is authorized', response, 'profile');
           this.user = response;
+          this.dataService.getDashBoards().subscribe();
         },
         error: (error) => {
           console.error('Authorization failed', error);
