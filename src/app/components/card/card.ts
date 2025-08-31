@@ -38,6 +38,5 @@ export class CardItem {
         (item) => item.type === 'device' && item.state,
       );
     }
-    console.log('Checkbox state:', this.isChecked);
   }
 }

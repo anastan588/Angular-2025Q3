@@ -1,71 +1,84 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { DashBoardItem, Data, Tab } from '../../data/types';
 import { DataService } from '../../services/data';
 import { Label } from '../label/label';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
+import { TabService } from 'src/app/services/tab';
+import {
+  catchError,
+  finalize,
+  Observable,
+  Subscription,
+  tap,
+  throwError,
+} from 'rxjs';
+import { DashboardService } from 'src/app/services/dashboard';
 
 @Component({
   selector: 'app-dashboard',
   imports: [CommonModule, MatTabsModule, RouterModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Dashboard implements OnInit {
+export class Dashboard implements OnInit, OnDestroy {
   dashboard!: string;
   dashboardId!: string;
   dashBoardData!: Data;
+  currentTab!: string;
+  dashboardDataSubscription!: Subscription;
+  TabDataSubscription!: Subscription;
   constructor(
-    private dataService: DataService,
     private route: ActivatedRoute,
     private router: Router,
+    private tabService: TabService,
+    private DashBoardService: DashboardService
   ) {
-    this.route.params.subscribe((params) => {
-      this.dashboardId = params['dashboardId'];
-      this.dashboard = params['dashboard'];
-      if (this.dashboardId !== undefined) {
-        this.loadDashboard(this.dashboardId);
-      }
+    this.TabDataSubscription = this.tabService.tab$.subscribe((tab) => {
+      this.currentTab = tab?.id as string;
     });
   }
 
   ngOnInit() {
-    this.dataService.firstDashboardsLoad$.subscribe((isDashBoardLoaded) => {
-      if (!isDashBoardLoaded) {
-        this.dataService.dashboardsLoaded$.subscribe((dashboardsLoaded) => {
-          this.dataService.setFirstDashboardsLoad(true);
-          if (dashboardsLoaded.length > 0) {
-            const firstDashboard = dashboardsLoaded[0];
-            this.dashboard = firstDashboard.title;
-            this.dashboardId = firstDashboard.id;
-            if (
-              this.route.snapshot.params['dashboardId'] !== this.dashboardId &&
-              this.dashboardId !== undefined
-            ) {
-              console.log(this.dashboard, 1455787878);
-              this.router.navigate([this.dashboard, this.dashboardId]);
-            }
+    this.dashboardDataSubscription =
+      this.DashBoardService.dashBoardData$.subscribe((data) => {
+        this.dashBoardData = data as Data;
+        if (this.dashBoardData) {
+          this.dashboardId = this.route.snapshot.params['dashboardId'];
+          this.dashboard = this.route.snapshot.params['dashboard'];
+          if (this.currentTab === undefined) {
+            this.currentTab =
+              this.route.snapshot.params['tabId'] ||
+              this.dashBoardData.tabs[0].id;
           }
-        });
-      }
-    });
+          const selectedTab = this.dashBoardData.tabs.find(
+            (tab) => tab.id === this.currentTab,
+          );
+          if (selectedTab) {
+            this.routerTab(selectedTab);
+          }
+        }
+      })
   }
 
-  loadDashboard(dashboardId: string): void {
-    this.dataService.getDashBoardById(dashboardId).subscribe(
-      (dashboardData) => {
-        this.dashBoardData = dashboardData;
-        console.log('Dashboard data loaded:', dashboardData);
-      },
-      (error) => {
-        console.error('Error loading dashboard:', error);
-      },
-    );
+
+  routerTab(tab: Tab) {
+    this.currentTab = tab.id;
+   
+    this.tabService.setTabData(tab);
+    this.router.navigate([tab.id], { relativeTo: this.route });
   }
 
-  logRouterLink(tab: Tab) {
-    console.log(`/${this.dashboard}/${this.dashboardId}/${tab.id}`);
-    this.router.navigate( [this.dashboard, this.dashboardId, tab.id], {state: tab});
+  ngOnDestroy() {
+    this.dashboardDataSubscription.unsubscribe();
+    this.TabDataSubscription.unsubscribe();
   }
 }

@@ -1,4 +1,4 @@
-<div *ngIf="dashBoardData; else loading">
+<div *ngIf="dashBoardData !== null; else loading">
   <div class="bg-teal-900 w-full flex flex-wrap gap-4 h-full">
     <mat-tab-group class="tabs">
       <mat-tab
@@ -7,13 +7,9 @@
         label="{{ tab.title }}"
       >
         <ng-template mat-tab-label>
-          <span
-            [routerLink]="['/dashboard', dashboardId, tab.id]"
-            [state]="tab"
-            (click)="logRouterLink(tab)"
-          >{{tab.title}}</span>
-          <router-outlet></router-outlet>
+          <span (click)="routerTab(tab)">{{ tab.title }}</span>
         </ng-template>
+        <router-outlet></router-outlet>
       </mat-tab>
     </mat-tab-group>
   </div>

@@ -1,8 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, HostListener, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  OnInit,
+} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  Data,
+  Router,
+  RouterModule,
+  RouterOutlet,
+} from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -10,6 +21,7 @@ import { AuthService } from 'src/app/services/auth';
 import { TokenService } from 'src/app/services/token-service';
 import { DashBoardItem, User } from 'src/app/data/types';
 import { DataService } from 'src/app/services/data';
+import { DashboardService } from 'src/app/services/dashboard';
 
 @Component({
   selector: 'app-sidebar',
@@ -38,22 +50,26 @@ export class Sidebar implements OnInit {
     private authService: AuthService,
     private tokenService: TokenService,
     private dataService: DataService,
-  ) {
-    this.dataService.dashboardsLoaded$.subscribe((dashBoardloaded) => {
-      this.dashboards = dashBoardloaded;
-    });
-  }
+    private router: Router,
+    private DashBoardService: DashboardService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
     this.token = this.tokenService.getToken() || '';
-
     if (this.token) {
-      console.log('token', this.token);
       this.authService.profile().subscribe({
         next: (response) => {
-          console.log('User is authorized', response, 'profile');
           this.user = response;
-          this.dataService.getDashBoards().subscribe();
+          this.dataService.getDashBoards().subscribe(() => {
+            this.dataService.dashboardsLoaded$.subscribe((dashBoardloaded) => {
+              this.dashboards = dashBoardloaded;
+              this.router.navigate([
+                this.dashboards[0].title,
+                this.dashboards[0].id,
+              ]);
+            });
+          });
         },
         error: (error) => {
           console.error('Authorization failed', error);
@@ -82,5 +98,14 @@ export class Sidebar implements OnInit {
 
   get userFullName() {
     return this.user ? this.user.fullName : 'Guest';
+  }
+
+  routerDash(dashboard: DashBoardItem) {
+    this.dataService.getDashBoardById(dashboard.id).subscribe((response) => {
+    
+      this.router.navigate([dashboard.title, dashboard.id], {
+        relativeTo: this.route,
+      });
+    });
   }
 }

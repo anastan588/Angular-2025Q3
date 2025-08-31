@@ -22,7 +22,7 @@
         <mat-nav-list>
           <mat-divider></mat-divider>
           @for (dashboard of dashboards; track dashboard.id) {
-            <a mat-list-item [routerLink]="[dashboard.title, dashboard.id]"
+            <a mat-list-item (click)="routerDash(dashboard)"
               >
               <span class="entry">
                 <mat-icon>{{ dashboard.icon }}</mat-icon>
@@ -45,7 +45,7 @@
         <p class="logo-text" *ngIf="sidenavOpened">RS.School. Angular</p>
       </div>
     </div> </mat-sidenav
-  ><mat-sidenav-content [style.margin-left.px]="!sidenavOpened ? 74 : 250">
+  ><mat-sidenav-content [style.margin-left.px]="!sidenavOpened ? 115 : 250">
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
