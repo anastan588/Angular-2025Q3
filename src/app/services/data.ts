@@ -50,6 +50,7 @@ export class DataService {
       }),
       catchError((error: HttpErrorResponse) => {
         console.error('Dashboard download failed', error);
+        this.getDashBoards().subscribe();
         return throwError(() => error);
       }),
     );

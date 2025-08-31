@@ -21,14 +21,22 @@
       <div class="list_links">
         <mat-nav-list>
           <mat-divider></mat-divider>
-          @for (dashboard of dashboards; track dashboard.id) {
-            <a mat-list-item (click)="routerDash(dashboard)"
-              >
-              <span class="entry">
-                <mat-icon>{{ dashboard.icon }}</mat-icon>
-                <span *ngIf="sidenavOpened">{{ dashboard.title }}</span>
-              </span>
-            </a>
+          @if (dashboards === undefined || (dashboards && dashboards.length ===0) ) {
+            <p class="dashboard_empty">
+              {{
+                `You don’t have any dashboards yet. They’ll appear here as soon as
+              you create them`
+              }}
+            </p>
+          } @else {
+            @for (dashboard of dashboards; track dashboard.id) {
+              <a mat-list-item (click)="routerDash(dashboard)">
+                <span class="entry">
+                  <mat-icon>{{ dashboard.icon }}</mat-icon>
+                  <span *ngIf="sidenavOpened">{{ dashboard.title }}</span>
+                </span>
+              </a>
+            }
           }
         </mat-nav-list>
       </div>

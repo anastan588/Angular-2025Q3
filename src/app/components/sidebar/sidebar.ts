@@ -22,6 +22,9 @@ import { TokenService } from 'src/app/services/token-service';
 import { DashBoardItem, User } from 'src/app/data/types';
 import { DataService } from 'src/app/services/data';
 import { DashboardService } from 'src/app/services/dashboard';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthDialog } from '../auth-dialog/auth-dialog';
 
 @Component({
   selector: 'app-sidebar',
@@ -53,6 +56,7 @@ export class Sidebar implements OnInit {
     private router: Router,
     private DashBoardService: DashboardService,
     private route: ActivatedRoute,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -71,8 +75,12 @@ export class Sidebar implements OnInit {
             });
           });
         },
-        error: (error) => {
-          console.error('Authorization failed', error);
+        error: (error: HttpErrorResponse) => {
+          if (error.status === 401) {
+            this.dialog.open(AuthDialog);
+          } else {
+            console.error('Authorization failed', error);
+          }
         },
       });
     }
@@ -102,7 +110,6 @@ export class Sidebar implements OnInit {
 
   routerDash(dashboard: DashBoardItem) {
     this.dataService.getDashBoardById(dashboard.id).subscribe((response) => {
-    
       this.router.navigate([dashboard.title, dashboard.id], {
         relativeTo: this.route,
       });
