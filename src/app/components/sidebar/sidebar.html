@@ -32,15 +32,30 @@
             </p>
           } @else {
             @for (dashboard of dashboards; track dashboard.id) {
-              <a mat-list-item (click)="routerDash(dashboard)">
-                <span class="entry">
-                  <mat-icon>{{ dashboard.icon }}</mat-icon>
-                  <span *ngIf="sidenavOpened">{{ dashboard.title }}</span>
-                </span>
-              </a>
+              <div class="dashboard-item">
+                <a mat-list-item (click)="routerDash(dashboard)">
+                  <span class="entry">
+                    <mat-icon>{{ dashboard.icon }}</mat-icon>
+                    <p *ngIf="sidenavOpened">{{ dashboard.title }}</p>
+                  </span>
+                </a>
+                <button
+                  [attr.data-id]="dashboard.id"
+                  class="delete-dashboard-button"
+                  mat-icon-button
+                  (click)="deleteDashBoard(dashboard, dashboards)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
             }
           }
         </mat-nav-list>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="adddashboard-button" (click)="openAddDashBoard()">
+        <mat-icon>add_2</mat-icon>
+        <button>Add dashboard</button>
       </div>
       <mat-divider></mat-divider>
       <div class="logout-menu">

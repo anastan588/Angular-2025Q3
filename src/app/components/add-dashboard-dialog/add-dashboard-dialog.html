@@ -1,0 +1,50 @@
+<div class="add-dashboard-dialog">
+  <h2 mat-dialog-title class="dialog-title">Create new dashboard</h2>
+  <mat-dialog-content >
+    <form [formGroup]="dashboardForm" (ngSubmit)="onSubmit()" class="dialog-content">
+      <mat-form-field>
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="id" required (input)="markIdAsTouched()"/>
+        <mat-error *ngIf="id?.hasError('required')">ID is required.</mat-error>
+        <mat-error *ngIf="id?.hasError('maxlength')"
+          >Max length is 30 characters.</mat-error
+        >
+        <mat-error *ngIf="id?.hasError('pattern')"
+          >ID should be alphanumeric.</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" required (input)="markTitleAsTouched()"/>
+        <mat-error *ngIf="title?.hasError('required')"
+          >Title is required.</mat-error
+        >
+        <mat-error *ngIf="title?.hasError('maxlength')"
+          >Max length is 50 characters.</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Icon</mat-label>
+        <input matInput formControlName="icon" required (input)="markIconAsTouched()"/>
+        <mat-error *ngIf="icon?.hasError('required')"
+          >Icon is required.</mat-error
+        >
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="submit-button"
+        [disabled]="dashboardForm.invalid"
+      >
+        Create
+      </button>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button matButton cdkFocusInitial (click)="close()" >
+        <mat-icon>close</mat-icon>
+    </button>
+  </mat-dialog-actions>
+</div>
