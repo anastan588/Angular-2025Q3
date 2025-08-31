@@ -18,7 +18,7 @@ export interface Card {
   items: Item[];
 }
 
-interface Tab {
+export interface Tab {
   id: string;
   title: string;
   cards: Card[];
@@ -26,4 +26,24 @@ interface Tab {
 
 export interface Data {
   tabs: Tab[];
+}
+
+export interface AuthResponse {
+  token: string;
+}
+
+export interface User {
+  fullName: string;
+  initials: string;
+}
+
+export interface ProfileResponse {
+  fullName: string;
+  initials: string;
+}
+
+export interface DashBoardItem {
+  id: string;   
+  title: string;
+  icon: string; 
 }

@@ -99,6 +99,12 @@ ul li {
       elevated-container-color: oklch(51.1% 0.096 186.391),
     )
   );
+
+  @include mat.form-field-overrides(
+    (
+      error-text-color: oklch(70.4% 0.191 22.216),
+    )
+  );
 }
 
 mat-sidenav[style] {

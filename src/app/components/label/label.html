@@ -1,0 +1,13 @@
+<div *ngIf="isLoading; else dataTemplate">
+  <p>Loading data, please wait 2...</p>
+</div>
+<ng-template #dataTemplate>
+  <div *ngIf="tab; else noDataTemplate">
+    <div class="tab-content">
+      <app-card-item *ngFor="let card of tab.cards" [card]="card" />
+    </div>
+  </div>
+</ng-template>
+<ng-template #noDataTemplate>
+  <p>No state data available.</p>
+</ng-template>

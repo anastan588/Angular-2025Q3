@@ -21,19 +21,34 @@
       <div class="list_links">
         <mat-nav-list>
           <mat-divider></mat-divider>
-          <a mat-list-item [routerLink]="['']">
-            <span class="entry">
-              <mat-icon>apps</mat-icon>
-              <span *ngIf="sidenavOpened">Overview</span>
-            </span>
-          </a>
-          <a mat-list-item [routerLink]="['/about']">
-            <span class="entry">
-              <mat-icon>help</mat-icon>
-              <span *ngIf="sidenavOpened">About</span>
-            </span>
-          </a>
+          @if (
+            dashboards === undefined || (dashboards && dashboards.length === 0)
+          ) {
+            <p class="dashboard_empty">
+              {{
+                `You don’t have any dashboards yet. They’ll appear here as soon as
+              you create them`
+              }}
+            </p>
+          } @else {
+            @for (dashboard of dashboards; track dashboard.id) {
+              <a mat-list-item (click)="routerDash(dashboard)">
+                <span class="entry">
+                  <mat-icon>{{ dashboard.icon }}</mat-icon>
+                  <span *ngIf="sidenavOpened">{{ dashboard.title }}</span>
+                </span>
+              </a>
+            }
+          }
         </mat-nav-list>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="logout-menu">
+        <p class="user-initials">{{ userInitials }}</p>
+        <p class="user-info">{{ userFullName }}</p>
+        <button class="logout-button">
+          <mat-icon (click)="logout()">logout</mat-icon>
+        </button>
       </div>
       <mat-divider></mat-divider>
       <div class="logo-block">
@@ -41,7 +56,7 @@
         <p class="logo-text" *ngIf="sidenavOpened">RS.School. Angular</p>
       </div>
     </div> </mat-sidenav
-  ><mat-sidenav-content [style.margin-left.px]="!sidenavOpened ? 74 : 250">
+  ><mat-sidenav-content [style.margin-left.px]="!sidenavOpened ? 115 : 250">
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

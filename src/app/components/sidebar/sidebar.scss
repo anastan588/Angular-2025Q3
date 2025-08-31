@@ -55,3 +55,30 @@ span {
   height: 20px;
 }
 
+.logout-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  padding: 10px;
+}
+.user-info {
+  display: flex;
+  align-items: center;
+}
+.user-initials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 50%;
+  background-color: oklch(51.1% 0.096 186.391);
+  border:  1px solid white;
+}
+.dashboard_empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  text-align: center;
+}
