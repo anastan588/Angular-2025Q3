@@ -78,7 +78,11 @@ export class Dashboard implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.dashboardDataSubscription.unsubscribe();
-    this.TabDataSubscription.unsubscribe();
+     if (this.dashboardDataSubscription) {
+      this.dashboardDataSubscription.unsubscribe();
+    }
+    if (this.TabDataSubscription) {
+      this.TabDataSubscription.unsubscribe();
+    }
   }
 }

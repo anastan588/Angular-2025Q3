@@ -82,14 +82,12 @@ export class LoginPage {
       console.log(loginData);
       this.authService.login(loginData).subscribe({
         next: (response) => {
-          console.log('Login successful', response,125);
+          console.log('Login successful', response);
         },
         error: (error) => {
           console.error('Login failed', error);
         },
       });
-    } else {
-      // Handle validation errors
     }
   }
 }

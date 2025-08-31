@@ -22,4 +22,11 @@
   align-self: center;
 }
 
+.login-button {
+  background-color: oklch(38.6% 0.063 188.416);
+  color: oklch(51.1% 0.096 186.391);
+}
 
+.login-button:hover {
+  color: white;
+}
