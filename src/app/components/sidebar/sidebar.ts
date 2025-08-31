@@ -112,6 +112,9 @@ export class Sidebar implements OnInit {
   get userFullName() {
     return this.user ? this.user.fullName : 'Guest';
   }
+  get userInitials() {
+    return this.user ? this.user.initials : 'GU';
+  }
 
   routerDash(dashboard: DashBoardItem) {
     this.dataService.getDashBoardById(dashboard.id).subscribe((response) => {
