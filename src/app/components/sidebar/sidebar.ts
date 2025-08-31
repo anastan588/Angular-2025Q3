@@ -54,7 +54,6 @@ export class Sidebar implements OnInit {
     private tokenService: TokenService,
     private dataService: DataService,
     private router: Router,
-    private DashBoardService: DashboardService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
   ) {}
@@ -77,9 +76,15 @@ export class Sidebar implements OnInit {
         },
         error: (error: HttpErrorResponse) => {
           if (error.status === 401) {
-            this.dialog.open(AuthDialog);
+            this.dialog.open(AuthDialog, {
+              data: { message: 'Invalid login or password.' },
+            });
           } else {
-            console.error('Authorization failed', error);
+            this.dialog.open(AuthDialog, {
+              data: {
+                message: 'Unknown error occurred. Please try again later.',
+              },
+            });
           }
         },
       });

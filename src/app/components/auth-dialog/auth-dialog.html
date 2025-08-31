@@ -1,8 +1,7 @@
 <h2 mat-dialog-title>Error</h2>
 <mat-dialog-content>
-  <p>What's your favorite animal?</p>
+  <p>{{ data.message }}</p>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button matButton>No Thanks</button>
   <button matButton [mat-dialog-close]="close()" cdkFocusInitial>Close</button>
 </mat-dialog-actions>
