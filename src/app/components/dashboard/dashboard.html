@@ -1,0 +1,19 @@
+<div *ngIf="dashBoardData !== null; else loading">
+  <div class="bg-teal-900 w-full flex flex-wrap gap-4 h-full">
+    <mat-tab-group class="tabs">
+      <mat-tab
+        class="tab"
+        *ngFor="let tab of dashBoardData.tabs"
+        label="{{ tab.title }}"
+      >
+        <ng-template mat-tab-label>
+          <span (click)="routerTab(tab)">{{ tab.title }}</span>
+        </ng-template>
+        <router-outlet></router-outlet>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
+<ng-template #loading>
+  <p>Loading data, please wait...</p>
+</ng-template>

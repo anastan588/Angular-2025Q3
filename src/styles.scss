@@ -1,0 +1,117 @@
+@use "tailwindcss";
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use "@angular/material" as mat;
+
+html {
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
+}
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/*Normalize*/
+
+:focus,
+:active {
+  outline: none;
+}
+
+a:focus,
+a:active {
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+ul li {
+  list-style: none;
+}
+
+/*Normalize*/
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+:root {
+  @include mat.slide-toggle-overrides(
+    (
+      track-height: 15px,
+      handle-height: 16px,
+      unselected-icon-size: 0px,
+      selected-icon-size: 0px,
+      selected-handle-size: 16px,
+      unselected-handle-size: 16px,
+      disabled-selected-track-color: oklch(85.2% 0.199 91.936),
+      selected-track-color: oklch(45.5% 0.188 13.697),
+      selected-hover-track-color: oklch(45.5% 0.188 13.697),
+      selected-pressed-track-color: oklch(45.5% 0.188 13.697),
+      selected-focus-track-color: oklch(45.5% 0.188 13.697),
+    )
+  );
+  @include mat.tabs-overrides(
+    (
+      active-label-text-color: white,
+      inactive-label-text-color: gray,
+      divider-color: white,
+      active-indicator-color: white,
+      active-hover-label-text-color: white,
+      active-hover-indicator-color: white,
+      active-focus-label-text-color: white,
+      inactive-hover-label-text-color: white,
+    )
+  );
+
+  @include mat.card-overrides(
+    (
+      filled-container-color: oklch(51.1% 0.096 186.391),
+      elevated-container-color: oklch(51.1% 0.096 186.391),
+    )
+  );
+
+  @include mat.form-field-overrides(
+    (
+      error-text-color: oklch(70.4% 0.191 22.216),
+    )
+  );
+}
+
+mat-sidenav[style] {
+  visibility: visible !important;
+}
+
+.mat-drawer {
+  transform: none !important;
+  width: inherit !important;
+}

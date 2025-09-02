@@ -1,0 +1,62 @@
+<mat-sidenav-container autosize>
+  <mat-sidenav
+    class="mat-side-menu"
+    [opened]="sidenavOpened"
+    fixedInViewport="true"
+    mode="side"
+  >
+    <div class="side-menu" [class.sidenav]="sidenavOpened">
+      <div></div>
+      <mat-toolbar color="primary" class="menu-close">
+        <button
+          class="menu-button"
+          mat-icon-button
+          aria-label="Menu icon"
+          (click)="toggleSidenav()"
+        >
+          <mat-icon>{{ sidenavOpened ? "close" : "menu" }}</mat-icon>
+        </button>
+        <h1 *ngIf="sidenavOpened">Smart Home UI</h1>
+      </mat-toolbar>
+      <div class="list_links">
+        <mat-nav-list>
+          <mat-divider></mat-divider>
+          @if (
+            dashboards === undefined || (dashboards && dashboards.length === 0)
+          ) {
+            <p class="dashboard_empty">
+              {{
+                `You don’t have any dashboards yet. They’ll appear here as soon as
+              you create them`
+              }}
+            </p>
+          } @else {
+            @for (dashboard of dashboards; track dashboard.id) {
+              <a mat-list-item (click)="routerDash(dashboard)">
+                <span class="entry">
+                  <mat-icon>{{ dashboard.icon }}</mat-icon>
+                  <span *ngIf="sidenavOpened">{{ dashboard.title }}</span>
+                </span>
+              </a>
+            }
+          }
+        </mat-nav-list>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="logout-menu">
+        <p class="user-initials">{{ userInitials }}</p>
+        <p class="user-info">{{ userFullName }}</p>
+        <button class="logout-button">
+          <mat-icon (click)="logout()">logout</mat-icon>
+        </button>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="logo-block">
+        <img [src]="logoUrl" alt="RS School Logo" class="logo" />
+        <p class="logo-text" *ngIf="sidenavOpened">RS.School. Angular</p>
+      </div>
+    </div> </mat-sidenav
+  ><mat-sidenav-content [style.margin-left.px]="!sidenavOpened ? 115 : 250">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

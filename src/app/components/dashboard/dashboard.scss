@@ -1,0 +1,15 @@
+app-labels {
+  width: 100%;
+}
+
+mat-tab-group {
+  gap: 4px;
+}
+.tabs {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.tab {
+  flex-grow: 1;
+}

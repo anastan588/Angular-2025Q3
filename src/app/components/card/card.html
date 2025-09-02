@@ -1,0 +1,29 @@
+<mat-card
+  class="example-card"
+  appearance="outlined"
+  [appCardHilight]="isChecked"
+>
+  <mat-card-header>
+    <mat-card-title>{{ card.title }}</mat-card-title>
+    <mat-slide-toggle
+      hideIcon="true"
+      *ngIf="isDevice"
+      [(ngModel)]="isChecked"
+      disabled="true"
+    ></mat-slide-toggle>
+  </mat-card-header>
+  <mat-card-content>
+    <ng-container *ngFor="let item of card.items">
+      <app-sensor
+        *ngIf="item.type === 'sensor'; else deviceItem"
+        [item]="item"
+      ></app-sensor>
+      <ng-template #deviceItem>
+        <app-device
+          [item]="item"
+          (checkedChange)="onCheckedChange($event)"
+        ></app-device>
+      </ng-template>
+    </ng-container>
+  </mat-card-content>
+</mat-card>
