@@ -27,7 +27,6 @@ import { Router } from '@angular/router';
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

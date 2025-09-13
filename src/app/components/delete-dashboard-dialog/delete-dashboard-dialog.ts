@@ -3,7 +3,6 @@ import { Component, Inject } from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
-  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
@@ -19,7 +18,6 @@ import { DataService } from 'src/app/services/data';
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
   ],
   templateUrl: './delete-dashboard-dialog.html',
   styleUrl: './delete-dashboard-dialog.scss',
