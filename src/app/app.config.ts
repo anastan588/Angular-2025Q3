@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideHttpClient(withInterceptors([authInterceptor])),
-    provideStore({ currentdashBoard: dashboardReducer }),
+    provideStore({ dashboard: dashboardReducer }),
     provideEffects([]),
     provideStoreDevtools(),
   ],

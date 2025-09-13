@@ -1,3 +1,9 @@
-import { createAction } from "@ngrx/store";
+import { createAction, props } from '@ngrx/store';
+import { Data } from '../data/types';
 
-export const loadDashboard = createAction('[CurrentDashboard] Load');
+export const enterEditMode = createAction(
+  '[Dashboard] Load Dashboard',
+  props<{ originalDashboard: Data }>(),
+);
+
+export const exitEditMode = createAction('[Dashboard] Exit Dashboard');

@@ -13,3 +13,17 @@ mat-tab-group {
 .tab {
   flex-grow: 1;
 }
+
+.edit-dashboard-button {
+  background-color: white;
+  padding: 5px 30px;
+  border-radius: 5px;
+}
+.dashboard-title {
+  color: white;
+  font-size: 200%;
+}
+.dashboard-buttons {
+  display: flex;
+  gap: 5px;
+}

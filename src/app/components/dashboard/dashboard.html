@@ -1,5 +1,31 @@
 <div *ngIf="dashBoardData !== null; else loading">
-  <div class="bg-teal-900 w-full flex flex-wrap gap-4 h-full">
+  <div class="bg-teal-900 w-full flex flex-col gap-4 p-2">
+    <p class="dashboard-title">{{ dashboard }}</p>
+    <div class="dashboard-buttons">
+      <button
+        *ngIf="!isEditing"
+        class="edit-dashboard-button"
+        mat-icon-button
+        (click)="editDasboard()"
+      >
+        Edit</button
+      ><ng-container *ngIf="isEditing">
+        <button
+          class="edit-dashboard-button"
+          mat-icon-button
+          (click)="saveDashboard()"
+        >
+          Save
+        </button>
+        <button
+          class="edit-dashboard-button"
+          mat-icon-button
+          (click)="discardChanges()"
+        >
+          Discard
+        </button>
+      </ng-container>
+    </div>
     <mat-tab-group class="tabs">
       <mat-tab
         class="tab"

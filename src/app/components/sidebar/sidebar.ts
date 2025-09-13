@@ -127,12 +127,13 @@ export class Sidebar implements OnInit {
   }
 
   openAddDashBoard() {
-    this.dialog.open(AddDashboardDialog );
+    this.dialog.open(AddDashboardDialog);
   }
 
-  deleteDashBoard(dashboard: DashBoardItem,  dashboards: Data) {
-    this.dialog.open(DeleteDashboardDialog,{
-      data: { dashboard, dashboards }, 
+  deleteDashBoard(dashboard: DashBoardItem, dashboards: Data) {
+    this.dialog.open(DeleteDashboardDialog, {
+      data: { dashboard, dashboards },
     });
   }
+
 }
