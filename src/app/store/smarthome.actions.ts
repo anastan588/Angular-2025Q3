@@ -17,3 +17,8 @@ export const deleteTab = createAction(
   '[Dashboard] Delete Tab',
   props<{ tabId: string}>(),
 );
+
+export const updateTabTitle = createAction(
+  '[Dashboard] Delete Tab',
+  props<{ tabId: string, newTitle: string}>(),
+);

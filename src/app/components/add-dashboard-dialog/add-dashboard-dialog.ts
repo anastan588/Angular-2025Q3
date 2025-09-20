@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import {
+  MAT_DIALOG_DATA,
   MatDialogActions,
   MatDialogClose,
   MatDialogContent,
@@ -19,6 +20,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { DataService } from 'src/app/services/data';
 import { Router } from '@angular/router';
+import { UniqueTitleValidator } from 'src/app/validators/uniqueTitleValidator';
+import { DashBoardItem } from 'src/app/data/types';
+import { UniqueIDValidator } from 'src/app/validators/uniqueIDValidator';
 
 @Component({
   selector: 'app-add-dashboard-dialog',
@@ -41,17 +45,22 @@ export class AddDashboardDialog {
     public dialogRef: MatDialogRef<AddDashboardDialog>,
     private dataService: DataService,
     private router: Router,
+    private uniqueTitleValidator: UniqueTitleValidator,
+    private uniqueIDValidator: UniqueIDValidator,
+    @Inject(MAT_DIALOG_DATA)
+    public data: { dashboards: DashBoardItem[] },
   ) {
     this.dashboardForm = new FormGroup({
-      id: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(30),
-        Validators.pattern(/^[a-zA-Z0-9_-]+$/),
-      ]),
-      title: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(50),
-      ]),
+      id: new FormControl(
+        '',
+        [Validators.required, Validators.maxLength(30)],
+        [this.uniqueIDValidator.validateID(this.data.dashboards)],
+      ),
+      title: new FormControl(
+        '',
+        [Validators.required, Validators.maxLength(50)],
+        [this.uniqueTitleValidator.validateTitle(this.data.dashboards)],
+      ),
       icon: new FormControl('', Validators.required),
     });
   }
@@ -78,11 +87,10 @@ export class AddDashboardDialog {
     if (control?.errors) control?.markAsTouched();
   }
 
-   markIconAsTouched() {
+  markIconAsTouched() {
     const control = this.dashboardForm.get('icon');
     if (control?.errors) control?.markAsTouched();
   }
-
 
   onSubmit() {
     if (this.dashboardForm.valid) {

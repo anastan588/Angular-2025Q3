@@ -8,7 +8,7 @@ export const dashboardReducer = createReducer(
   on(dashboardActions.enterEditMode, (state, { originalDashboard }) => ({
     ...state,
     isEditing: true,
-    currentDashboard: originalDashboard
+    currentDashboard: originalDashboard,
   })),
   on(dashboardActions.exitEditMode, (state) => ({
     ...state,
@@ -27,6 +27,15 @@ export const dashboardReducer = createReducer(
     currentDashboard: {
       ...state.currentDashboard,
       tabs: state.currentDashboard.tabs.filter((tab) => tab.id !== tabId),
+    },
+  })),
+  on(dashboardActions.updateTabTitle, (state, { tabId, newTitle }) => ({
+    ...state,
+    currentDashboard: {
+      ...state.currentDashboard,
+      tabs: state.currentDashboard.tabs.map((tab) =>
+        tab.id === tabId ? { ...tab, title: newTitle } : tab,
+      ),
     },
   })),
 );

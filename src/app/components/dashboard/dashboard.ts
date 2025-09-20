@@ -121,7 +121,8 @@ export class Dashboard implements OnInit, OnDestroy {
           dashBoardForUpdate,
           this.dashboardId,
         ).subscribe(() => {
-          this.DataService.getDashBoards().subscribe((updatedDashboards) => {
+          this.DataService.getDashBoards().subscribe(() => {
+            this.store.dispatch(exitEditMode());
           });
         });
       }
@@ -137,4 +138,6 @@ export class Dashboard implements OnInit, OnDestroy {
       data: { tabId: tabId },
     });
   }
+
+  editTab() {}
 }

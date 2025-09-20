@@ -126,8 +126,10 @@ export class Sidebar implements OnInit {
     });
   }
 
-  openAddDashBoard() {
-    this.dialog.open(AddDashboardDialog);
+  openAddDashBoard(dashboards: Data) {
+    this.dialog.open(AddDashboardDialog, {
+      data: { dashboards },
+    });
   }
 
   deleteDashBoard(dashboard: DashBoardItem, dashboards: Data) {
@@ -135,5 +137,4 @@ export class Sidebar implements OnInit {
       data: { dashboard, dashboards },
     });
   }
-
 }

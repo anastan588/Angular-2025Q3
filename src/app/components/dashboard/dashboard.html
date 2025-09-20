@@ -53,7 +53,14 @@
             (keydown.enter)="routerTab(tab)"
           >
             {{ tab.title }}
-        </p>
+          </p>
+          <button
+            class="edit-tab-button"
+            mat-icon-button
+            (click)="editTab()"
+          >
+            Edit
+          </button>
           <button
             *ngIf="isEditing"
             [attr.data-id]="tab.id"

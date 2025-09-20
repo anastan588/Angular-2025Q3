@@ -15,8 +15,13 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { Tab } from 'src/app/data/types';
+import { Store } from '@ngrx/store';
+import { Data, Tab } from 'src/app/data/types';
 import { TabService } from 'src/app/services/tab';
+import { loadCurrentDashboard } from 'src/app/store/smarthome.selectors';
+import { DashboardState } from 'src/app/store/smarthome.store';
+import { UniqueIDValidator } from 'src/app/validators/uniqueIDValidator';
+import { UniqueTitleValidator } from 'src/app/validators/uniqueTitleValidator';
 
 @Component({
   selector: 'app-add-tab.dialog',
@@ -35,15 +40,28 @@ import { TabService } from 'src/app/services/tab';
 })
 export class AddTabDialog {
   tabForm: FormGroup;
+  dashBoard!: Data;
   constructor(
     public dialogRef: MatDialogRef<AddTabDialog>,
     public tabService: TabService,
+    private uniqueTitleValidator: UniqueTitleValidator,
+    private uniqueIDValidator: UniqueIDValidator,
+    private store: Store<{ dashboard: DashboardState }>,
   ) {
+    this.store.select(loadCurrentDashboard).subscribe((value) => {
+      this.dashBoard = value;
+    });
     this.tabForm = new FormGroup({
-      id: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(30),
-      ]),
+      id: new FormControl(
+        '',
+        [Validators.required, Validators.maxLength(30)],
+        [this.uniqueIDValidator.validateID(this.dashBoard)],
+      ),
+      title: new FormControl(
+        '',
+        [Validators.required, Validators.maxLength(50)],
+        [this.uniqueTitleValidator.validateTitle(this.dashBoard)],
+      ),
     });
   }
   get id() {

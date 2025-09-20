@@ -3,16 +3,35 @@
   <mat-dialog-content>
     <form [formGroup]="tabForm" (ngSubmit)="onSubmit()" class="dialog-content">
       <mat-form-field>
-        <mat-label>ID/Title</mat-label>
+        <mat-label>ID</mat-label>
         <input
           matInput
           formControlName="id"
           required
           (input)="markIdAsTouched()"
         />
-        <mat-error *ngIf="id?.hasError('required')">ID/Title is required.</mat-error>
+        <mat-error *ngIf="id?.hasError('required')">ID is required.</mat-error>
         <mat-error *ngIf="id?.hasError('maxlength')"
           >Max length is 30 characters.</mat-error
+        >
+        <mat-error *ngIf="id?.hasError('unique')">ID must be unique.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input
+          matInput
+          formControlName="title"
+          required
+          (input)="markTitleAsTouched()"
+        />
+        <mat-error *ngIf="title?.hasError('required')"
+          >Title is required.</mat-error
+        >
+        <mat-error *ngIf="title?.hasError('maxlength')"
+          >Max length is 50 characters.</mat-error
+        >
+        <mat-error *ngIf="title?.hasError('unique')"
+          >Title must be unique.</mat-error
         >
       </mat-form-field>
       <button
