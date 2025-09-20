@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { enterEditMode } from '../store/smarthome.actions';
-import { DashBoardItem, Data } from '../data/types';
+import { Data } from '../data/types';
 
 @Injectable({
   providedIn: 'root',
@@ -34,10 +34,13 @@ export class DashboardService {
 
   setcurrentDashBoardToStore() {
     const currentDashBoard = this.dashBoardDataSubject.getValue();
-    console.log(currentDashBoard);
     if (currentDashBoard) {
-      this.store.dispatch(enterEditMode({ originalDashboard: currentDashBoard }));
+      this.store.dispatch(
+        enterEditMode({ originalDashboard: currentDashBoard }),
+      );
     }
     return;
   }
+
+
 }

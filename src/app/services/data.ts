@@ -66,7 +66,7 @@ export class DataService {
       }),
       catchError((error: HttpErrorResponse) => {
         console.error('New Dashboard creation failed', error);
-        
+
         return throwError(() => error);
       }),
     );
@@ -81,6 +81,24 @@ export class DataService {
       catchError((error: HttpErrorResponse) => {
         console.error('Dashboard detetion failed', error);
         return throwError(() => error);
+      }),
+    );
+  }
+
+  updateDashBoard(dashboard: Data, dashboardId: string) {
+    const url = `${this.dashboardsUrl}/${dashboardId}`;
+    return this.http.put(url, dashboard).pipe(
+      tap((response) => {
+        console.log('Dashboard updated successfully', response);
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('Dashboard update failed', error);
+        if (error.status === 404) {
+          console.error('Dashboard not found');
+        } else if (error.status === 400) {
+          console.error('Bad request', error.error);
+        }
+        return throwError(() => new Error('Failed to update dashboard'));
       }),
     );
   }

@@ -8,13 +8,25 @@ export const dashboardReducer = createReducer(
   on(dashboardActions.enterEditMode, (state, { originalDashboard }) => ({
     ...state,
     isEditing: true,
-    currentDashboard: originalDashboard,
-    originalDashboard: originalDashboard,
+    currentDashboard: originalDashboard
   })),
   on(dashboardActions.exitEditMode, (state) => ({
     ...state,
     isEditing: false,
-    currentDashboard: {} as Data, 
-    originalDashboard: {} as Data, 
+    currentDashboard: {} as Data,
+  })),
+  on(dashboardActions.addTab, (state, { newTab }) => ({
+    ...state,
+    currentDashboard: {
+      ...state.currentDashboard,
+      tabs: [...state.currentDashboard.tabs, newTab],
+    },
+  })),
+  on(dashboardActions.deleteTab, (state, { tabId }) => ({
+    ...state,
+    currentDashboard: {
+      ...state.currentDashboard,
+      tabs: state.currentDashboard.tabs.filter((tab) => tab.id !== tabId),
+    },
   })),
 );

@@ -26,14 +26,43 @@
         </button>
       </ng-container>
     </div>
+    <button
+      class="add-tab-button"
+      mat-icon-button
+      (click)="addTab()"
+      *ngIf="isEditing"
+    >
+      <mat-icon class="add-tab-button-icon">add</mat-icon>
+    </button>
     <mat-tab-group class="tabs">
       <mat-tab
         class="tab"
-        *ngFor="let tab of dashBoardData.tabs"
-        label="{{ tab.title }}"
+        *ngFor="
+          let tab of isEditing
+            ? (dashBoardDataEditing$ | async)!.tabs
+            : dashBoardData.tabs;
+          trackBy: trackByTabId
+        "
+        [label]="tab.title"
       >
         <ng-template mat-tab-label>
-          <span (click)="routerTab(tab)">{{ tab.title }}</span>
+          <p
+            class="tab-title"
+            (click)="routerTab(tab)"
+            tabindex="0"
+            (keydown.enter)="routerTab(tab)"
+          >
+            {{ tab.title }}
+        </p>
+          <button
+            *ngIf="isEditing"
+            [attr.data-id]="tab.id"
+            class="delete-tab-button"
+            mat-icon-button
+            (click)="deleteTab(tab.id)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
         </ng-template>
         <router-outlet></router-outlet>
       </mat-tab>

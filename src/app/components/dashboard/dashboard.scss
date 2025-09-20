@@ -8,10 +8,19 @@ mat-tab-group {
 .tabs {
   height: 100vh;
   display: flex;
-  flex-direction: column;
+  // flex-direction: column;
 }
 .tab {
   flex-grow: 1;
+  display: flex;
+  gap: 30px;
+  width: 100%;
+}
+.tab-title {
+  flex-grow: 1;
+}
+.mdc-tab__content {
+  width: 100%;
 }
 
 .edit-dashboard-button {
@@ -26,4 +35,12 @@ mat-tab-group {
 .dashboard-buttons {
   display: flex;
   gap: 5px;
+}
+
+.add-tab-button {
+  display: flex;
+  align-self: flex-end;
+}
+.add-tab-button-icon {
+  color: white;
 }

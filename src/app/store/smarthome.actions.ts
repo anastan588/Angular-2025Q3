@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Data } from '../data/types';
+import { Data, Tab } from '../data/types';
 
 export const enterEditMode = createAction(
   '[Dashboard] Load Dashboard',
@@ -7,3 +7,13 @@ export const enterEditMode = createAction(
 );
 
 export const exitEditMode = createAction('[Dashboard] Exit Dashboard');
+
+export const addTab = createAction(
+  '[Dashboard] Add Tab',
+  props<{ newTab: Tab}>(),
+);
+
+export const deleteTab = createAction(
+  '[Dashboard] Delete Tab',
+  props<{ tabId: string}>(),
+);

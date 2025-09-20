@@ -12,13 +12,19 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TabService } from 'src/app/services/tab';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, shareReplay, Subscription } from 'rxjs';
 import { DashboardService } from 'src/app/services/dashboard';
 import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
 import { exitEditMode } from 'src/app/store/smarthome.actions';
 import { DashboardState } from 'src/app/store/smarthome.store';
-import { loadCurrentDashboard, loadEditingMode } from 'src/app/store/smarthome.selectors';
+import {
+  loadCurrentDashboard,
+  loadEditingMode,
+} from 'src/app/store/smarthome.selectors';
+import { MatDialog } from '@angular/material/dialog';
+import { AddTabDialog } from '../add-tab.dialog/add-tab.dialog';
+import { DeletetabDialog } from '../deletetab.dialog/deletetab.dialog';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,6 +37,7 @@ export class Dashboard implements OnInit, OnDestroy {
   dashboard!: string;
   dashboardId!: string;
   dashBoardData!: Data;
+  dashBoardDataEditing$!: Observable<Data>;
   currentTab!: string;
   dashboardDataSubscription!: Subscription;
   TabDataSubscription!: Subscription;
@@ -42,16 +49,19 @@ export class Dashboard implements OnInit, OnDestroy {
     private router: Router,
     private tabService: TabService,
     private DashBoardService: DashboardService,
+    private DataService: DataService,
     private store: Store<{ dashboard: DashboardState }>,
+    private dialog: MatDialog,
   ) {
     this.TabDataSubscription = this.tabService.tab$.subscribe((tab) => {
       this.currentTab = tab?.id as string;
     });
-    this.store
-      .select(loadEditingMode)
-      .subscribe((value) => {
-        this.isEditing = value;
-      });
+    this.store.select(loadEditingMode).subscribe((value) => {
+      this.isEditing = value;
+    });
+    this.dashBoardDataEditing$ = this.store
+      .select(loadCurrentDashboard)
+      .pipe(shareReplay(1));
   }
 
   ngOnInit() {
@@ -84,6 +94,10 @@ export class Dashboard implements OnInit, OnDestroy {
     this.router.navigate([tab.id], { relativeTo: this.route });
   }
 
+  trackByTabId(index: number, tab: any): number {
+    return tab.id;
+  }
+
   ngOnDestroy() {
     if (this.dashboardDataSubscription) {
       this.dashboardDataSubscription.unsubscribe();
@@ -100,5 +114,27 @@ export class Dashboard implements OnInit, OnDestroy {
     this.store.dispatch(exitEditMode());
   }
 
-  saveDashboard() {}
+  saveDashboard() {
+    this.dashBoardDataEditing$.subscribe((dashBoardForUpdate) => {
+      if (dashBoardForUpdate) {
+        this.DataService.updateDashBoard(
+          dashBoardForUpdate,
+          this.dashboardId,
+        ).subscribe(() => {
+          this.DataService.getDashBoards().subscribe((updatedDashboards) => {
+          });
+        });
+      }
+    });
+  }
+
+  addTab() {
+    this.dialog.open(AddTabDialog);
+  }
+
+  deleteTab(tabId: string) {
+    this.dialog.open(DeletetabDialog, {
+      data: { tabId: tabId },
+    });
+  }
 }
