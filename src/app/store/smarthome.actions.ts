@@ -10,15 +10,15 @@ export const exitEditMode = createAction('[Dashboard] Exit Dashboard');
 
 export const addTab = createAction(
   '[Dashboard] Add Tab',
-  props<{ newTab: Tab}>(),
+  props<{ newTab: Tab }>(),
 );
 
 export const deleteTab = createAction(
   '[Dashboard] Delete Tab',
-  props<{ tabId: string}>(),
+  props<{ tabId: string }>(),
 );
 
 export const updateTabTitle = createAction(
-  '[Dashboard] Delete Tab',
-  props<{ tabId: string, newTitle: string}>(),
+  '[Dashboard] UpdateTab Tab',
+  props<{ tabId: string; newTitle: string }>(),
 );

@@ -25,6 +25,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { AddTabDialog } from '../add-tab.dialog/add-tab.dialog';
 import { DeletetabDialog } from '../deletetab.dialog/deletetab.dialog';
+import { EditTabDialog } from '../edit-tab.dialog/edit-tab.dialog';
 
 @Component({
   selector: 'app-dashboard',
@@ -139,5 +140,9 @@ export class Dashboard implements OnInit, OnDestroy {
     });
   }
 
-  editTab() {}
+  editTab(tabId: string, tabTitle: string) {
+    this.dialog.open(EditTabDialog, {
+      data: { tabId: tabId, tabTitle: tabTitle },
+    });
+  }
 }

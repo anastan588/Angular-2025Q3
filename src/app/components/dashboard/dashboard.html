@@ -46,30 +46,33 @@
         [label]="tab.title"
       >
         <ng-template mat-tab-label>
-          <p
-            class="tab-title"
-            (click)="routerTab(tab)"
-            tabindex="0"
-            (keydown.enter)="routerTab(tab)"
-          >
-            {{ tab.title }}
-          </p>
-          <button
-            class="edit-tab-button"
-            mat-icon-button
-            (click)="editTab()"
-          >
-            Edit
-          </button>
-          <button
-            *ngIf="isEditing"
-            [attr.data-id]="tab.id"
-            class="delete-tab-button"
-            mat-icon-button
-            (click)="deleteTab(tab.id)"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
+          <div class="tab-title-content">
+            <p
+              class="tab-title"
+              (click)="routerTab(tab)"
+              tabindex="0"
+              (keydown.enter)="routerTab(tab)"
+            >
+              {{ tab.title }}
+            </p>
+            <button
+              *ngIf="isEditing"
+              class="edit-tab-button"
+              mat-icon-button
+              (click)="editTab(tab.id, tab.title)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              *ngIf="isEditing"
+              [attr.data-id]="tab.id"
+              class="delete-tab-button"
+              mat-icon-button
+              (click)="deleteTab(tab.id)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </ng-template>
         <router-outlet></router-outlet>
       </mat-tab>

@@ -1,0 +1,44 @@
+<div class="edit-tab-dialog">
+  <h2 mat-dialog-title>Edit tab title</h2>
+  <mat-dialog-content>
+    <form
+      [formGroup]="tabTitleForm"
+      (ngSubmit)="onSubmit()"
+      class="dialog-content"
+    >
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input
+          matInput
+          formControlName="title"
+          value=""
+          required
+          (input)="markTitleAsTouched()"
+        />
+        <mat-error *ngIf="title?.hasError('required')"
+          >Title is required.</mat-error
+        >
+        <mat-error *ngIf="title?.hasError('maxlength')"
+          >Max length is 50 characters.</mat-error
+        >
+        <mat-error *ngIf="title?.hasError('unique')"
+          >Title must be unique.</mat-error
+        >
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="submit-button"
+        [disabled]="tabTitleForm.invalid"
+      >
+        Edit
+      </button>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions class="dialog-action">
+    <button matButton class="dialog-button" (click)="close()" cdkFocusInitial>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-dialog-actions>
+</div>

@@ -33,8 +33,8 @@ export const dashboardReducer = createReducer(
     ...state,
     currentDashboard: {
       ...state.currentDashboard,
-      tabs: state.currentDashboard.tabs.map((tab) =>
-        tab.id === tabId ? { ...tab, title: newTitle } : tab,
+      tabs: state.currentDashboard.tabs.map(
+        (tab) => (tab.id === tabId ? { ...tab, title: newTitle} : tab),
       ),
     },
   })),
