@@ -1,0 +1,24 @@
+.edit-tab-dialog {
+  background-color: oklch(51.1% 0.096 186.391);
+}
+.dialog-title {
+  color: white;
+}
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.submit-button {
+  background-color: oklch(27.7% 0.046 192.524);
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid white;
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: white;
+  color: oklch(27.7% 0.046 192.524);
+}

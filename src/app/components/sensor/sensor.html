@@ -1,4 +1,11 @@
-<div class="sensor">
+<div
+  class="sensor"
+  [ngClass]="{
+    vertical: card.layout === 'horizontalLayout',
+    horizontal: card.layout === 'verticalLayout',
+    single: card.layout === 'singleDevice',
+  }"
+>
   <mat-icon
     class="icon"
     aria-hidden="false"

@@ -1,3 +1,16 @@
+.dashboard-main {
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.dashboard-container {
+  background-color: #0f766e;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem;
+}
+
 app-labels {
   width: 100%;
 }
@@ -8,8 +21,62 @@ mat-tab-group {
 .tabs {
   height: 100vh;
   display: flex;
-  flex-direction: column;
+  // position: relative;
+  // flex-direction: column;
 }
 .tab {
   flex-grow: 1;
+  display: flex;
+  width: 100%;
+}
+.tab-title {
+  flex-grow: 1;
+}
+.tab-title-content {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.mdc-tab__content {
+  width: 100%;
+}
+
+.edit-dashboard-button {
+  background-color: white;
+  padding: 5px 30px;
+  border-radius: 5px;
+}
+.dashboard-title {
+  color: white;
+  font-size: 200%;
+}
+.dashboard-buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.add-tab-button {
+  display: flex;
+  align-self: flex-end;
+}
+.add-tab-button-icon {
+  color: white;
+}
+.arrow-forward-button:disabled {
+  color: gray;
+}
+.arrow-back-button:disabled {
+  color: gray;
+}
+
+.add-card-button {
+  position: absolute;
+  padding: 10px;
+  background-color: white;
+  right: 50px;
+  bottom: 100px;
+  border-radius: 10px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
 }

@@ -25,6 +25,8 @@ import { DashboardService } from 'src/app/services/dashboard';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthDialog } from '../auth-dialog/auth-dialog';
+import { AddDashboardDialog } from '../add-dashboard-dialog/add-dashboard-dialog';
+import { DeleteDashboardDialog } from '../delete-dashboard-dialog/delete-dashboard-dialog';
 
 @Component({
   selector: 'app-sidebar',
@@ -121,6 +123,18 @@ export class Sidebar implements OnInit {
       this.router.navigate([dashboard.title, dashboard.id], {
         relativeTo: this.route,
       });
+    });
+  }
+
+  openAddDashBoard(dashboards: Data) {
+    this.dialog.open(AddDashboardDialog, {
+      data: { dashboards },
+    });
+  }
+
+  deleteDashBoard(dashboard: DashBoardItem, dashboards: Data) {
+    this.dialog.open(DeleteDashboardDialog, {
+      data: { dashboard, dashboards },
     });
   }
 }

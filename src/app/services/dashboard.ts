@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Data } from '@angular/router';
+
+import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { enterEditMode } from '../store/smarthome.actions';
+import { Data } from '../data/types';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +15,8 @@ export class DashboardService {
   private isFirstDashboardRender = new BehaviorSubject<boolean>(false);
   firstDashboardRender$: Observable<boolean> =
     this.isFirstDashboardRender.asObservable();
+
+  constructor(private store: Store) {}
 
   setDashBoardData(data: Data) {
     this.dashBoardDataSubject.next(data);
@@ -25,5 +30,15 @@ export class DashboardService {
   }
   getDashBoardRender(): boolean {
     return this.isFirstDashboardRender.getValue();
+  }
+
+  setcurrentDashBoardToStore() {
+    const currentDashBoard = this.dashBoardDataSubject.getValue();
+    if (currentDashBoard) {
+      this.store.dispatch(
+        enterEditMode({ originalDashboard: currentDashBoard }),
+      );
+    }
+    return;
   }
 }

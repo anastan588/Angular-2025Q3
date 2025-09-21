@@ -7,7 +7,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const tokenService = new TokenService();
   const router = new Router();
   const token = tokenService.getToken();
-  console.log(req,145878);
   let clonedRequest = req.clone({ url: `http://localhost:3004/api${req.url}` });
   if (token) {
     clonedRequest = clonedRequest.clone({

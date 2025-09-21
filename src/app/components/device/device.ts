@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Item } from '../../data/types';
+import { Card, Item } from '../../data/types';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class Device implements OnInit {
   @Input() item!: Item;
+  @Input() card!: Card;
   @Output() checkedChange = new EventEmitter<boolean>();
   isChecked: boolean = false;
 

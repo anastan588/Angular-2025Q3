@@ -1,0 +1,82 @@
+<div class="add-card-dialog">
+  <h2 mat-dialog-title class="dialog-title">Create new card</h2>
+  <mat-dialog-content>
+    <form [formGroup]="cardForm" (ngSubmit)="onSubmit()" class="dialog-content">
+      <mat-form-field>
+        <mat-label>ID</mat-label>
+        <input
+          matInput
+          formControlName="id"
+          required
+          (input)="markIdAsTouched()"
+        />
+        <mat-error *ngIf="id?.hasError('required')">ID is required.</mat-error>
+        <mat-error *ngIf="id?.hasError('maxlength')"
+          >Max length is 30 characters.</mat-error
+        >
+        <mat-error *ngIf="id?.hasError('unique')">ID must be unique.</mat-error>
+        <mat-error *ngIf="id?.hasError('invalidKebabCase')"
+          >ID must be in kebab-case.</mat-error
+        >
+        <mat-error *ngIf="cardForm?.hasError('duplicate')"
+          >ID must be duplicate with title.</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input
+          matInput
+          formControlName="title"
+          required
+          (input)="markTitleAsTouched()"
+        />
+        <mat-error *ngIf="title?.hasError('required')"
+          >Title is required.</mat-error
+        >
+        <mat-error *ngIf="title?.hasError('maxlength')"
+          >Max length is 50 characters.</mat-error
+        >
+        <mat-error *ngIf="id?.hasError('unique')"
+          >Title must be unique.</mat-error
+        >
+        <mat-error *ngIf="title?.hasError('invalidPascalCase')"
+          >Title must be in pascal-case.</mat-error
+        >
+        <mat-error *ngIf="cardForm?.hasError('duplicate')"
+          >Title must be duplicate with id.</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Layout</mat-label>
+        <select
+          matNativeControl
+          required
+          formControlName="layout"
+          (input)="markLayoutAsTouched()"
+        >
+          <option value="singleDevice">Single Device</option>
+          <option value="verticalLayout">Vertical Layout</option>
+          <option value="horizontalLayout">Horizontal Layout</option>
+        </select>
+        <mat-error *ngIf="cardForm.get('layout')!.hasError('required')">
+          Layout is required.
+        </mat-error>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        class="submit-button"
+        [disabled]="cardForm.invalid"
+      >
+        Create
+      </button>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button matButton cdkFocusInitial (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-dialog-actions>
+</div>

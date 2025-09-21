@@ -45,8 +45,7 @@ export class DataService {
       tap((response) => {
         console.log('Dashboard is downloaded', response);
         this.DashBoardService.setDashBoardData(response);
-        this.tabService.setTabData(response.tabs[0])
-
+        this.tabService.setTabData(response.tabs[0]);
       }),
       catchError((error: HttpErrorResponse) => {
         console.error('Dashboard download failed', error);
@@ -58,5 +57,49 @@ export class DataService {
 
   setFirstDashboardsLoad(isLoaded: boolean): void {
     this.isFirstDashboardsLoad.next(isLoaded);
+  }
+
+  createBoard(newDashBoard: DashBoardItem): Observable<DashBoardItem> {
+    return this.http.post<DashBoardItem>(this.dashboardsUrl, newDashBoard).pipe(
+      tap((response) => {
+        console.log('New Dashboard is created', response);
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('New Dashboard creation failed', error);
+
+        return throwError(() => error);
+      }),
+    );
+  }
+
+  deleteDashBoardById(dashboardID: string) {
+    const url = `${this.dashboardsUrl}/${dashboardID}`;
+    return this.http.delete(url).pipe(
+      tap((response) => {
+        console.log('Dashboard is deleted', response);
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('Dashboard detetion failed', error);
+        return throwError(() => error);
+      }),
+    );
+  }
+
+  updateDashBoard(dashboard: Data, dashboardId: string) {
+    const url = `${this.dashboardsUrl}/${dashboardId}`;
+    return this.http.put(url, dashboard).pipe(
+      tap((response) => {
+        console.log('Dashboard updated successfully', response);
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error('Dashboard update failed', error);
+        if (error.status === 404) {
+          console.error('Dashboard not found');
+        } else if (error.status === 400) {
+          console.error('Bad request', error.error);
+        }
+        return throwError(() => new Error('Failed to update dashboard'));
+      }),
+    );
   }
 }

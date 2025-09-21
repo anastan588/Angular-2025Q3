@@ -1,14 +1,107 @@
-<div *ngIf="dashBoardData !== null; else loading">
-  <div class="bg-teal-900 w-full flex flex-wrap gap-4 h-full">
+<div *ngIf="dashBoardData !== null; else loading" class="dashboard-main">
+  <div class="dashboard-container">
+    <p class="dashboard-title">{{ dashboard }}</p>
+    <div class="dashboard-buttons">
+      <button
+        *ngIf="!isEditing"
+        class="edit-dashboard-button"
+        mat-icon-button
+        (click)="editDasboard()"
+      >
+        Edit</button
+      ><ng-container *ngIf="isEditing">
+        <button
+          class="edit-dashboard-button"
+          mat-icon-button
+          (click)="saveDashboard()"
+        >
+          Save
+        </button>
+        <button
+          class="edit-dashboard-button"
+          mat-icon-button
+          (click)="discardChanges()"
+        >
+          Discard
+        </button>
+      </ng-container>
+    </div>
+    <button
+      class="add-tab-button"
+      mat-icon-button
+      (click)="addTab()"
+      *ngIf="isEditing"
+    >
+      <mat-icon class="add-tab-button-icon">add</mat-icon>
+    </button>
     <mat-tab-group class="tabs">
       <mat-tab
         class="tab"
-        *ngFor="let tab of dashBoardData.tabs"
-        label="{{ tab.title }}"
+        *ngFor="
+          let tab of isEditing
+            ? (dashBoardDataEditing$ | async)!.tabs
+            : dashBoardData.tabs;
+          let i = index;
+          trackBy: trackByTabId
+        "
+        [label]="tab.title"
       >
         <ng-template mat-tab-label>
-          <span (click)="routerTab(tab)">{{ tab.title }}</span>
+          <button
+            *ngIf="isEditing"
+            class="arrow-back-button"
+            mat-icon-button
+            [disabled]="i === 0"
+            (click)="reorderTab(tab.id, 'left')"
+          >
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <div class="tab-title-content">
+            <p
+              class="tab-title"
+              (click)="routerTab(tab)"
+              tabindex="0"
+              (keydown.enter)="routerTab(tab)"
+            >
+              {{ tab.title }}
+            </p>
+            <button
+              *ngIf="isEditing"
+              class="edit-tab-button"
+              mat-icon-button
+              (click)="editTab(tab.id, tab.title)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              *ngIf="isEditing"
+              [attr.data-id]="tab.id"
+              class="delete-tab-button"
+              mat-icon-button
+              (click)="deleteTab(tab.id)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+          <button
+            *ngIf="isEditing"
+            class="arrow-forward-button"
+            mat-icon-button
+            [disabled]="i === (dashBoardDataEditing$ | async)!.tabs.length - 1"
+            (click)="reorderTab(tab.id, 'right')"
+          >
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
         </ng-template>
+        <button
+          *ngIf="isEditing"
+          class="add-card-button"
+          mat-icon-button
+          (click)="addCard(tab.id)"
+        >
+          <mat-icon>add</mat-icon>
+          <p>Add card</p>
+        </button>
         <router-outlet></router-outlet>
       </mat-tab>
     </mat-tab-group>

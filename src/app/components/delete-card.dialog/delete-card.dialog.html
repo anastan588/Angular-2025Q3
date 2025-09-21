@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Delete</h2>
+<mat-dialog-content>
+  <p>Are you sure that you want to delete this card?</p>
+</mat-dialog-content>
+<mat-dialog-actions class="dialog-action">
+  <button matButton class="dialog-button" (click)="delete()" cdkFocusInitial>
+    Yes
+  </button>
+  <button matButton class="dialog-button" (click)="close()" cdkFocusInitial>
+    No
+  </button>
+</mat-dialog-actions>

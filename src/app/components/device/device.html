@@ -1,11 +1,17 @@
-<div class="flex gap-4">
+<div
+  class="device"
+  [ngClass]="{
+    vertical: card.layout === 'horizontalLayout',
+    horizontal: card.layout === 'verticalLayout',
+    single: card.layout === 'singleDevice',
+  }"
+>
   <button class="device-icon" (click)="onToggleClick()">
     <mat-icon
       aria-hidden="false"
       [attr.aria-label]="'Icon for ' + item.label"
       [fontIcon]="getIcon(item.label)"
       [ngClass]="isChecked ? 'icon-checked' : 'icon-unchecked'"
-      
     ></mat-icon>
   </button>
   <p>{{ item.label }}</p>
