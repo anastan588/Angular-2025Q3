@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Data, Tab } from '../data/types';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { addTab, deleteTab, updateTabTitle } from '../store/smarthome.actions';
+import { addTab, deleteTab, reorderTabs, updateTabTitle } from '../store/smarthome.actions';
 import { Store } from '@ngrx/store';
 
 @Injectable({
@@ -35,6 +35,12 @@ export class TabService {
   editTabTitleStore(tabId: string, tabTitle: string) {
     if (tabId && tabTitle) {
       this.store.dispatch(updateTabTitle({ tabId: tabId, newTitle: tabTitle }));
+    }
+    return;
+  }
+  reorderTabInStore(tabId: string, direction: 'left' | 'right') {
+    if (tabId && direction) {
+      this.store.dispatch(reorderTabs({ tabId: tabId, direction: direction }));
     }
     return;
   }

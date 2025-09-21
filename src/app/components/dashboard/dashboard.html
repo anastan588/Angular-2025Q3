@@ -41,11 +41,21 @@
           let tab of isEditing
             ? (dashBoardDataEditing$ | async)!.tabs
             : dashBoardData.tabs;
+          let i = index;
           trackBy: trackByTabId
         "
         [label]="tab.title"
       >
         <ng-template mat-tab-label>
+          <button
+            *ngIf="isEditing"
+            class="arrow-back-button"
+            mat-icon-button
+            [disabled]="i === 0"
+            (click)="reorderTab(tab.id, 'left')"
+          >
+            <mat-icon>arrow_back</mat-icon>
+          </button>
           <div class="tab-title-content">
             <p
               class="tab-title"
@@ -73,6 +83,15 @@
               <mat-icon>delete</mat-icon>
             </button>
           </div>
+          <button
+            *ngIf="isEditing"
+            class="arrow-forward-button"
+            mat-icon-button
+            [disabled]="i === (dashBoardDataEditing$ | async)!.tabs.length - 1"
+            (click)="reorderTab(tab.id, 'right')"
+          >
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
         </ng-template>
         <router-outlet></router-outlet>
       </mat-tab>

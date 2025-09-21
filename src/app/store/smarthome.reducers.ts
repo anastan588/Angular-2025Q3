@@ -33,9 +33,29 @@ export const dashboardReducer = createReducer(
     ...state,
     currentDashboard: {
       ...state.currentDashboard,
-      tabs: state.currentDashboard.tabs.map(
-        (tab) => (tab.id === tabId ? { ...tab, title: newTitle} : tab),
+      tabs: state.currentDashboard.tabs.map((tab) =>
+        tab.id === tabId ? { ...tab, title: newTitle } : tab,
       ),
     },
   })),
+  on(dashboardActions.reorderTabs, (state, { tabId, direction }) => {
+    const tabs = [...state.currentDashboard.tabs];
+    const currentIndex = tabs.findIndex((tab) => tab.id === tabId);
+    if (currentIndex >= 0) {
+      if (direction === 'left' && currentIndex > 0) {
+        const [movedTab] = tabs.splice(currentIndex, 1);
+        tabs.splice(currentIndex - 1, 0, movedTab);
+      } else if (direction === 'right' && currentIndex < tabs.length - 1) {
+        const [movedTab] = tabs.splice(currentIndex, 1);
+        tabs.splice(currentIndex + 1, 0, movedTab);
+      }
+    }
+    return {
+      ...state,
+      currentDashboard: {
+        ...state.currentDashboard,
+        tabs,
+      },
+    };
+  }),
 );

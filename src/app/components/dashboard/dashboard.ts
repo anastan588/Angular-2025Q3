@@ -12,7 +12,15 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatTabsModule } from '@angular/material/tabs';
 import { TabService } from 'src/app/services/tab';
-import { Observable, shareReplay, Subscription } from 'rxjs';
+import {
+  filter,
+  Observable,
+  of,
+  shareReplay,
+  Subscription,
+  switchMap,
+  take,
+} from 'rxjs';
 import { DashboardService } from 'src/app/services/dashboard';
 import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngrx/store';
@@ -32,7 +40,6 @@ import { EditTabDialog } from '../edit-tab.dialog/edit-tab.dialog';
   imports: [CommonModule, MatTabsModule, RouterModule, MatIconModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Dashboard implements OnInit, OnDestroy {
   dashboard!: string;
@@ -116,18 +123,26 @@ export class Dashboard implements OnInit, OnDestroy {
   }
 
   saveDashboard() {
-    this.dashBoardDataEditing$.subscribe((dashBoardForUpdate) => {
-      if (dashBoardForUpdate) {
-        this.DataService.updateDashBoard(
-          dashBoardForUpdate,
-          this.dashboardId,
-        ).subscribe(() => {
-          this.DataService.getDashBoards().subscribe(() => {
-            this.store.dispatch(exitEditMode());
-          });
-        });
-      }
-    });
+    console.log('save');
+    this.dashBoardDataEditing$
+      .pipe(
+        take(1),
+        switchMap((dashBoardForUpdate) => {
+          if (dashBoardForUpdate) {
+            return this.DataService.updateDashBoard(
+              dashBoardForUpdate,
+              this.dashboardId,
+            );
+          }
+          return of(null); // Handle the case where there is no update
+        }),
+        filter((response) => response !== null), // Ensure we only proceed if there's a response
+        switchMap(() => this.DataService.getDashBoardById(this.dashboardId)),
+      )
+      .subscribe(() => {
+        this.store.dispatch(exitEditMode());
+        console.log(this.dashBoardData);
+      });
   }
 
   addTab() {
@@ -144,5 +159,8 @@ export class Dashboard implements OnInit, OnDestroy {
     this.dialog.open(EditTabDialog, {
       data: { tabId: tabId, tabTitle: tabTitle },
     });
+  }
+  reorderTab(tabId: string, direction: 'left' | 'right') {
+    this.tabService.reorderTabInStore(tabId, direction);
   }
 }

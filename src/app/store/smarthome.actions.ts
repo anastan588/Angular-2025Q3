@@ -19,6 +19,11 @@ export const deleteTab = createAction(
 );
 
 export const updateTabTitle = createAction(
-  '[Dashboard] UpdateTab Tab',
+  '[Dashboard] Update Tab',
   props<{ tabId: string; newTitle: string }>(),
+);
+
+export const reorderTabs = createAction(
+  '[Dashboard] Reorder Tab',
+  props<{ tabId: string; direction: 'left' | 'right' }>(),
 );
