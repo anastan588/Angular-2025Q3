@@ -8,3 +8,20 @@
 .device-icon {
   cursor: pointer;
 }
+
+.single {
+  display: flex;
+  gap: 10px;
+}
+
+.horizontal {
+  display: flex;
+  gap: 15px;
+}
+
+.vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+

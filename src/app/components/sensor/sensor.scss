@@ -1,8 +1,26 @@
-.sensor {
-  display: flex;
-  gap: 10px;
-  justify-content: space-between;
-}
+// .sensor {
+//   display: flex;
+//   gap: 10px;
+//   justify-content: space-between;
+// }
 .icon {
  color: oklch(71.5% 0.143 215.221);
+}
+
+
+.single {
+  display: flex;
+  gap: 10px;
+}
+
+.horizontal {
+  display: flex;
+  gap: 15px;
+}
+
+.vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  align-items: center;
 }

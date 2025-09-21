@@ -5,7 +5,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { DashBoardItem, Data, Tab } from '../../data/types';
+import { Card, DashBoardItem, Data, Tab } from '../../data/types';
 import { DataService } from '../../services/data';
 import { Label } from '../label/label';
 import { CommonModule } from '@angular/common';
@@ -34,6 +34,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddTabDialog } from '../add-tab.dialog/add-tab.dialog';
 import { DeletetabDialog } from '../deletetab.dialog/deletetab.dialog';
 import { EditTabDialog } from '../edit-tab.dialog/edit-tab.dialog';
+import { AddCardDialog } from '../add-card.dialog/add-card.dialog';
 
 @Component({
   selector: 'app-dashboard',
@@ -46,6 +47,7 @@ export class Dashboard implements OnInit, OnDestroy {
   dashboardId!: string;
   dashBoardData!: Data;
   dashBoardDataEditing$!: Observable<Data>;
+  cards!: Card[];
   currentTab!: string;
   dashboardDataSubscription!: Subscription;
   TabDataSubscription!: Subscription;
@@ -123,7 +125,6 @@ export class Dashboard implements OnInit, OnDestroy {
   }
 
   saveDashboard() {
-    console.log('save');
     this.dashBoardDataEditing$
       .pipe(
         take(1),
@@ -134,9 +135,9 @@ export class Dashboard implements OnInit, OnDestroy {
               this.dashboardId,
             );
           }
-          return of(null); // Handle the case where there is no update
+          return of(null);
         }),
-        filter((response) => response !== null), // Ensure we only proceed if there's a response
+        filter((response) => response !== null),
         switchMap(() => this.DataService.getDashBoardById(this.dashboardId)),
       )
       .subscribe(() => {
@@ -162,5 +163,20 @@ export class Dashboard implements OnInit, OnDestroy {
   }
   reorderTab(tabId: string, direction: 'left' | 'right') {
     this.tabService.reorderTabInStore(tabId, direction);
+  }
+
+  addCard(tabId: string) {
+    this.dashBoardDataEditing$
+    .pipe(take(1))
+    .subscribe((data) => {
+      const tab = data.tabs.find((tab) => tab.id === tabId);
+      if (tab) {
+        this.dialog.open(AddCardDialog, {
+          data: { tabId: tabId, cards: tab.cards },
+        });
+      } else {
+        console.error(`Tab with id ${tabId} not found.`);
+      }
+    });
   }
 }

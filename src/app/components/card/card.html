@@ -1,5 +1,5 @@
 <mat-card
-  class="example-card"
+  class="card"
   appearance="outlined"
   [appCardHilight]="isChecked"
 >
@@ -11,16 +11,31 @@
       [(ngModel)]="isChecked"
       disabled="true"
     ></mat-slide-toggle>
+    <button
+      *ngIf="isEditing$ | async"
+      [attr.data-id]="card.id"
+      class="delete-tab-button"
+      mat-icon-button
+      (click)="deleteCard(card.id, tab.id)"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
   </mat-card-header>
-  <mat-card-content>
+  <mat-card-content
+    [ngClass]="{
+      horizontal: card.layout === 'horizontalLayout',
+      vertical: card.layout === 'verticalLayout',
+      single: card.layout === 'singleDevice',
+    }"
+  >
     <ng-container *ngFor="let item of card.items">
-      <app-sensor
-        *ngIf="item.type === 'sensor'; else deviceItem"
-        [item]="item"
-      ></app-sensor>
+      <ng-container *ngIf="item.type === 'sensor'; else deviceItem">
+        <app-sensor [item]="item" [card]="card"></app-sensor>
+      </ng-container>
       <ng-template #deviceItem>
         <app-device
           [item]="item"
+          [card]="card"
           (checkedChange)="onCheckedChange($event)"
         ></app-device>
       </ng-template>

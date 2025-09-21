@@ -6,11 +6,11 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { catchError, map, Observable, of, switchMap } from 'rxjs';
-import { DashBoardItem, Data } from '../data/types';
+import { Card, DashBoardItem, Data } from '../data/types';
 
 @Injectable({ providedIn: 'root' })
 export class UniqueTitleValidator {
-  validateTitle(dataToCheck: DashBoardItem[] | Data): AsyncValidatorFn {
+  validateTitle(dataToCheck: DashBoardItem[] | Data | Card[]): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
       if (!control.value) {
         return of(null);

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Data, Tab } from '../data/types';
+import { Card, Data, Tab } from '../data/types';
 
 export const enterEditMode = createAction(
   '[Dashboard] Load Dashboard',
@@ -26,4 +26,14 @@ export const updateTabTitle = createAction(
 export const reorderTabs = createAction(
   '[Dashboard] Reorder Tab',
   props<{ tabId: string; direction: 'left' | 'right' }>(),
+);
+
+export const addCard = createAction(
+  '[Dashboard] Add Card',
+  props<{ tabId: string, newCard: Card }>(),
+);
+
+export const deleteCard = createAction(
+  '[Dashboard] delete Card',
+  props<{ tabId: string, cardId: string }>(),
 );

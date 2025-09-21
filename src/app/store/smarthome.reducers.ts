@@ -58,4 +58,38 @@ export const dashboardReducer = createReducer(
       },
     };
   }),
+  on(dashboardActions.addCard, (state, { tabId, newCard }) => {
+    return {
+      ...state,
+      currentDashboard: {
+        ...state.currentDashboard,
+        tabs: state.currentDashboard.tabs.map((tab) => {
+          if (tab.id === tabId) {
+            return {
+              ...tab,
+              cards: [...tab.cards, newCard],
+            };
+          }
+          return tab;
+        }),
+      },
+    };
+  }),
+  on(dashboardActions.deleteCard, (state, { tabId, cardId }) => {
+    return {
+      ...state,
+      currentDashboard: {
+        ...state.currentDashboard,
+        tabs: state.currentDashboard.tabs.map((tab) => {
+          if (tab.id === tabId) {
+            return {
+              ...tab,
+              cards: tab.cards.filter((card) => card.id !== cardId),
+            };
+          }
+          return tab;
+        }),
+      },
+    };
+  }),
 );

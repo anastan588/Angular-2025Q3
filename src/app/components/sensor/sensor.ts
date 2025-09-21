@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Item } from '../../data/types';
+import { Card, Item } from '../../data/types';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { FormatvaluesPipe } from 'src/app/pipes/formatvalues-pipe';
@@ -12,6 +12,7 @@ import { FormatvaluesPipe } from 'src/app/pipes/formatvalues-pipe';
 })
 export class Sensor {
   @Input() item!: Item;
+  @Input() card!: Card;
   iconMap: { [key: string]: string } = {
     Temp: 'thermostat',
     Humidity: 'dew_point',

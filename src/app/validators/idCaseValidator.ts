@@ -17,7 +17,6 @@ export class idCaseValidator {
         /[A-Z]{2,}(?=[A-Z][a-z]+|\b)|[A-Z]?[a-z]+|[A-Z]|[0-9]+/gm.test(
           control.value,
         );
-      console.log(isKebabCase);
       if (!isKebabCase) {
         return of({ invalidKebabCase: true });
       }

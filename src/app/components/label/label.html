@@ -4,7 +4,11 @@
 <ng-template #dataTemplate>
   <div *ngIf="tab; else noDataTemplate">
     <div class="tab-content">
-      <app-card-item *ngFor="let card of tab.cards" [card]="card" />
+      <app-card-item *ngFor="let card of isEditing
+            ? (cardsEditing$ | async)!
+            : tab.cards;
+          let i = index;
+          trackBy: trackByCardId" [card]="card" [tab]="tab" />
     </div>
   </div>
 </ng-template>
