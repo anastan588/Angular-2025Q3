@@ -19,6 +19,12 @@
           >Max length is 30 characters.</mat-error
         >
         <mat-error *ngIf="id?.hasError('unique')">ID must be unique.</mat-error>
+        <mat-error *ngIf="id?.hasError('invalidKebabCase')"
+          >ID must be in kebab-case.</mat-error
+        >
+        <mat-error *ngIf="dashboardForm?.hasError('duplicate')"
+          >ID must be duplicate with title.</mat-error
+        >
       </mat-form-field>
       <mat-form-field>
         <mat-label>Title</mat-label>
@@ -34,7 +40,15 @@
         <mat-error *ngIf="title?.hasError('maxlength')"
           >Max length is 50 characters.</mat-error
         >
-        <mat-error *ngIf="id?.hasError('unique')">Title must be unique.</mat-error>
+        <mat-error *ngIf="id?.hasError('unique')"
+          >Title must be unique.</mat-error
+        >
+        <mat-error *ngIf="title?.hasError('invalidPascalCase')"
+          >Title must be in pascal-case.</mat-error
+        >
+        <mat-error *ngIf="dashboardForm?.hasError('duplicate')"
+          >Title must be duplicate with id.</mat-error
+        >
       </mat-form-field>
       <mat-form-field>
         <mat-label>Icon</mat-label>

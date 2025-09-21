@@ -23,6 +23,9 @@ import { Router } from '@angular/router';
 import { UniqueTitleValidator } from 'src/app/validators/uniqueTitleValidator';
 import { DashBoardItem } from 'src/app/data/types';
 import { UniqueIDValidator } from 'src/app/validators/uniqueIDValidator';
+import { idCaseValidator } from 'src/app/validators/idCaseValidator';
+import { titleCaseValidator } from 'src/app/validators/titleCaseValidator';
+import { duplicateValidator } from 'src/app/validators/duplicateValidator';
 
 @Component({
   selector: 'app-add-dashboard-dialog',
@@ -47,22 +50,34 @@ export class AddDashboardDialog {
     private router: Router,
     private uniqueTitleValidator: UniqueTitleValidator,
     private uniqueIDValidator: UniqueIDValidator,
+    private caseIDValidator: idCaseValidator,
+    private caseTitleValidator: titleCaseValidator,
+    private duplicateValidator: duplicateValidator,
     @Inject(MAT_DIALOG_DATA)
     public data: { dashboards: DashBoardItem[] },
   ) {
-    this.dashboardForm = new FormGroup({
-      id: new FormControl(
-        '',
-        [Validators.required, Validators.maxLength(30)],
-        [this.uniqueIDValidator.validateID(this.data.dashboards)],
-      ),
-      title: new FormControl(
-        '',
-        [Validators.required, Validators.maxLength(50)],
-        [this.uniqueTitleValidator.validateTitle(this.data.dashboards)],
-      ),
-      icon: new FormControl('', Validators.required),
-    });
+    this.dashboardForm = new FormGroup(
+      {
+        id: new FormControl(
+          '',
+          [Validators.required, Validators.maxLength(30)],
+          [
+            this.caseIDValidator.validateID(),
+            this.uniqueIDValidator.validateID(this.data.dashboards),
+          ],
+        ),
+        title: new FormControl(
+          '',
+          [Validators.required, Validators.maxLength(50)],
+          [
+            this.caseTitleValidator.validateTitle(),
+            this.uniqueTitleValidator.validateTitle(this.data.dashboards),
+          ],
+        ),
+        icon: new FormControl('', Validators.required),
+      },
+      { validators: this.duplicateValidator.validateDuplicate('id', 'title') },
+    );
   }
 
   get id() {

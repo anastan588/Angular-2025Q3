@@ -18,7 +18,7 @@
         <mat-error *ngIf="id?.hasError('invalidKebabCase')"
           >ID must be in kebab-case.</mat-error
         >
-        <mat-error *ngIf="id?.hasError('duplicate')"
+        <mat-error *ngIf="tabForm?.hasError('duplicate')"
           >ID must be duplicate with title.</mat-error
         >
       </mat-form-field>
@@ -42,8 +42,8 @@
         <mat-error *ngIf="title?.hasError('invalidPascalCase')"
           >Title must be in pascal-case.</mat-error
         >
-        <mat-error *ngIf="title?.hasError('duplicate')"
-          >Title must be duplicate with title.</mat-error
+        <mat-error *ngIf="tabForm?.hasError('duplicate')"
+          >Title must be duplicate with id.</mat-error
         >
       </mat-form-field>
       <button
@@ -51,7 +51,7 @@
         color="primary"
         type="submit"
         class="submit-button"
-        [disabled]="tabForm.invalid"
+      
       >
         Create
       </button>

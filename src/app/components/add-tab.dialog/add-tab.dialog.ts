@@ -20,8 +20,10 @@ import { Data, Tab } from 'src/app/data/types';
 import { TabService } from 'src/app/services/tab';
 import { loadCurrentDashboard } from 'src/app/store/smarthome.selectors';
 import { DashboardState } from 'src/app/store/smarthome.store';
-import { idDuplicateValidator } from 'src/app/validators/idDuplicateValidator';
-import { titleDuplicateValidator } from 'src/app/validators/titleDuplicateValidator';
+import { duplicateValidator } from 'src/app/validators/duplicateValidator';
+import { idCaseValidator } from 'src/app/validators/idCaseValidator';
+import { titleCaseValidator } from 'src/app/validators/titleCaseValidator';
+
 import { UniqueIDValidator } from 'src/app/validators/uniqueIDValidator';
 import { UniqueTitleValidator } from 'src/app/validators/uniqueTitleValidator';
 
@@ -48,41 +50,37 @@ export class AddTabDialog {
     public tabService: TabService,
     private uniqueTitleValidator: UniqueTitleValidator,
     private uniqueIDValidator: UniqueIDValidator,
-    private duplicateIDValidator: idDuplicateValidator,
-    private duplicateTitleValidator: titleDuplicateValidator,
+    private caseIDValidator: idCaseValidator,
+    private caseTitleValidator: titleCaseValidator,
+    private duplicateValidator: duplicateValidator,
     private store: Store<{ dashboard: DashboardState }>,
   ) {
     this.store.select(loadCurrentDashboard).subscribe((value) => {
       this.dashBoard = value;
     });
-    this.tabForm = new FormGroup({
-      id: new FormControl('', [Validators.required, Validators.maxLength(30)]),
-      title: new FormControl(
-        '',
-        [Validators.required, Validators.maxLength(50)],
-        [],
-      ),
-    });
-    this.setAsyncValidators();
+    this.tabForm = new FormGroup(
+      {
+        id: new FormControl(
+          '',
+          [Validators.required, Validators.maxLength(30)],
+          [
+            this.caseIDValidator.validateID(),
+            this.uniqueIDValidator.validateID(this.dashBoard),
+          ],
+        ),
+        title: new FormControl(
+          '',
+          [Validators.required, Validators.maxLength(50)],
+          [
+            this.caseTitleValidator.validateTitle(),
+            this.uniqueTitleValidator.validateTitle(this.dashBoard),
+          ],
+        ),
+      },
+      { validators: this.duplicateValidator.validateDuplicate('id', 'title') },
+    );
   }
 
-  setAsyncValidators() {
-    const titleControl = this.tabForm.get('title');
-    const idControl = this.tabForm.get('id');
-
-    if (titleControl && idControl) {
-      idControl.setAsyncValidators([
-        this.duplicateIDValidator.validateID(titleControl),
-        this.uniqueIDValidator.validateID(this.dashBoard),
-      ]);
-      idControl.updateValueAndValidity();
-      titleControl.setAsyncValidators([
-        this.duplicateTitleValidator.validateTitle(idControl),
-        this.uniqueTitleValidator.validateTitle(this.dashBoard),
-      ]);
-      titleControl.updateValueAndValidity();
-    }
-  }
   get id() {
     return this.tabForm.get('id');
   }
@@ -101,6 +99,7 @@ export class AddTabDialog {
     if (control?.errors) control?.markAsTouched();
   }
   onSubmit() {
+    console.log(this.tabForm.valid, 'valid');
     if (this.tabForm.valid) {
       const formValue = this.tabForm.value;
       const newTab: Tab = {
